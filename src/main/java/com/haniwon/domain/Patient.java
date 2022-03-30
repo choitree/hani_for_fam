@@ -32,11 +32,6 @@ public class Patient {
     private String sex;
     private String phone;
     private LocalDate firstVisit;
-
-//    @Generated(GenerationTime.INSERT)
-//    @Column
-//    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-//    @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDate lastVisit;
 
     private LocalDate birthday;
@@ -70,4 +65,14 @@ public class Patient {
                 .build();
     }
 
+    public void updatePatient(PatientRequestDTO patientRequestDTO) {
+        this.pId = patientRequestDTO.getPId();
+        this.name = patientRequestDTO.getName();
+        this.sex = patientRequestDTO.getSex();
+        this.phone = patientRequestDTO.getPhone();
+        this.firstVisit = patientRequestDTO.getFirstVisit();
+        this.lastVisit = patientRequestDTO.getLastVisit();
+        this.birthday = patientRequestDTO.getBirthday();
+        this.memo = patientRequestDTO.getMemo();
+    }
 }

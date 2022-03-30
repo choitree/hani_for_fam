@@ -23,4 +23,14 @@ public class PatientService {
         Patient patient = Patient.createPatient(patientRequestDTO);
         patientRepository.save(patient);
     }
+
+    public void updatePatient(PatientRequestDTO patientRequestDTO, Long id) {
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("해당 번호의 환자가 존재하지 않습니다."));
+        patient.updatePatient(patientRequestDTO);
+        patientRepository.save(patient);
+    }
+
+    public void deletePatient(Long id) {
+    }
+
 }
