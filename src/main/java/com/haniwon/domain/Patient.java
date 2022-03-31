@@ -75,4 +75,8 @@ public class Patient {
         this.birthday = patientRequestDTO.getBirthday();
         this.memo = patientRequestDTO.getMemo();
     }
+
+    public void updateLastVisit(LocalDate lastVisit) {
+        this.lastVisit = lastVisit;
+    }
 }
