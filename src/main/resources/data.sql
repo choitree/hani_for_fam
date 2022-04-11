@@ -15,13 +15,24 @@ INSERT INTO patient(id, birthday, first_visit, last_visit, name, chart_id, phone
 VALUES(7, '1800-01-01', '1988-01-01', '2022-04-01', '임꺽정', 7, '010-1234-5678', '남자');
 
 -- 매출 정보
-INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
-VALUES(1, 1000, '2022-04-07', 1, 1, 1, '지인 소개', '홍길동', '발목 염좌', 6);
-INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, name, symptom, patient_id)
-VALUES(2, 7000, '2022-04-07', 1, 1, 1, '최희윤', '발목 염좌', 4);
-INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
-VALUES(3, 7000, '2022-04-07', 1, 1, 1, '지인 소개', '어나미너스', '발목 염좌', 5);
-INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
-VALUES(4, 300000, '2022-04-07', 0, 1, 1, '지인 소개', '최희윤', '다이어트 한약', 4);
-INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
-VALUES(5, 1000000, '2022-04-07', 0, 1, 1, '지인 소개', '임꺽정', '공진단', 7);
+INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, symptom, patient_id)
+VALUES(1, 1000, '2022-04-07', 1, 1, 1, '지인 소개', '발목 염좌', 6);
+INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, symptom, patient_id)
+VALUES(2, 7000, '2022-04-07', 1, 1, 1, '발목 염좌', 4);
+INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, symptom, patient_id)
+VALUES(3, 7000, '2022-04-07', 1, 1, 1, '지인 소개', '발목 염좌', 5);
+INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, symptom, patient_id)
+VALUES(4, 300000, '2022-04-07', 0, 1, 1, '지인 소개', '다이어트 한약', 4);
+INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, symptom, patient_id)
+VALUES(5, 1000000, '2022-04-07', 0, 1, 1, '지인 소개', '공진단', 7);
+
+-- INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
+-- VALUES(1, 1000, '2022-04-07', 1, 1, 1, '지인 소개', '홍길동', '발목 염좌', 6);
+-- INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, name, symptom, patient_id)
+-- VALUES(2, 7000, '2022-04-07', 1, 1, 1, '최희윤', '발목 염좌', 4);
+-- INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
+-- VALUES(3, 7000, '2022-04-07', 1, 1, 1, '지인 소개', '어나미너스', '발목 염좌', 5);
+-- INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
+-- VALUES(4, 300000, '2022-04-07', 0, 1, 1, '지인 소개', '최희윤', '다이어트 한약', 4);
+-- INSERT INTO income(id, amount, date, is_acupuncture, is_cash, is_pay, memo, name, symptom, patient_id)
+-- VALUES(5, 1000000, '2022-04-07', 0, 1, 1, '지인 소개', '임꺽정', '공진단', 7);

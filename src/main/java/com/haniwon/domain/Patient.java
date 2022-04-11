@@ -35,7 +35,7 @@ public class Patient {
     private LocalDate birthday;
     private String memo;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Income> incomes = new ArrayList<>();
 
     public static Patient createPatient(PatientRequestDTO patientDTO) {
