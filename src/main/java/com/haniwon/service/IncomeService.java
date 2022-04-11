@@ -67,4 +67,14 @@ public class IncomeService {
         patientRepository.save(oldPatient);
     }
 
+    @Transactional
+    public void deleteIncome(Long incomeId) {
+        Income income = incomeRepository.findById(incomeId).orElseThrow(() -> new NoSuchElementException("삭제할 매출에 정보가 존재하지 않습니다."));
+        Patient patient = income.getPatient();
+        incomeRepository.delete(income);
+        LocalDate lastVisit = incomeRepository.findLastVisitByPatient(patient);
+        patient.updateLastVisit(lastVisit);
+        patientRepository.save(patient);
+    }
+
 }

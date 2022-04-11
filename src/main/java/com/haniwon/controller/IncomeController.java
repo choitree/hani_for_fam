@@ -37,5 +37,11 @@ public class IncomeController {
         return ResponseEntity.ok(new ResponseDTO("OK"));
     }
 
- 
+    @DeleteMapping("/{incomeId}")
+    public ResponseEntity<ResponseDTO> deleteIncome(@PathVariable Long incomeId) {
+        incomeService.deleteIncome(incomeId);
+        return ResponseEntity.ok(new ResponseDTO("OK"));
+    }
+
+
 }
