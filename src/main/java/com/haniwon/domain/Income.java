@@ -38,6 +38,7 @@ public class Income {
     public static Income createIncome(IncomeRequestDTO incomeDTO, Patient patient) {
         return Income.builder()
                 .date(incomeDTO.getDate())
+                .amount(incomeDTO.getAmount())
                 .name(incomeDTO.getName())
                 .isCash(incomeDTO.getIsCash())
                 .isPay(incomeDTO.getIsPay())

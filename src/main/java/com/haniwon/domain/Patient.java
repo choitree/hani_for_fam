@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Generated;
-import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "patient")
+@Table(name = "patient", uniqueConstraints = { @UniqueConstraint(name = "UniqueNameAndBirthday", columnNames = { "name", "birthday" }) })
 public class Patient {
 
     @Id
@@ -26,7 +24,7 @@ public class Patient {
     private Long id;
 
     @Column(unique = true)
-    private Integer pId;
+    private Integer chartId;
 
     private String name;
     private String sex;
@@ -37,13 +35,13 @@ public class Patient {
     private LocalDate birthday;
     private String memo;
 
-//    @OneToMany(mappedBy = "patient")
-//    private List<Income> incomes = new ArrayList<>();
+    @OneToMany(mappedBy = "patient")
+    private List<Income> incomes = new ArrayList<>();
 
     public static Patient createPatient(PatientRequestDTO patientDTO) {
         if(patientDTO.getLastVisit() == null) {
             return Patient.builder()
-                    .pId(patientDTO.getPId())
+                    .chartId(patientDTO.getChartId())
                     .name(patientDTO.getName())
                     .sex(patientDTO.getSex())
                     .phone(patientDTO.getPhone())
@@ -54,7 +52,7 @@ public class Patient {
                     .build();
         }
         return Patient.builder()
-                .pId(patientDTO.getPId())
+                .chartId(patientDTO.getChartId())
                 .name(patientDTO.getName())
                 .sex(patientDTO.getSex())
                 .phone(patientDTO.getPhone())
@@ -66,7 +64,7 @@ public class Patient {
     }
 
     public void updatePatient(PatientRequestDTO patientRequestDTO) {
-        this.pId = patientRequestDTO.getPId();
+        this.chartId = patientRequestDTO.getChartId();
         this.name = patientRequestDTO.getName();
         this.sex = patientRequestDTO.getSex();
         this.phone = patientRequestDTO.getPhone();
@@ -76,7 +74,27 @@ public class Patient {
         this.memo = patientRequestDTO.getMemo();
     }
 
+    public void updateFirstVisitAndLastVisit(LocalDate firstVisit, LocalDate lastVisit) {
+        this.lastVisit = lastVisit;
+        this.firstVisit = firstVisit;
+    }
+
     public void updateLastVisit(LocalDate lastVisit) {
         this.lastVisit = lastVisit;
+    }
+
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", chartId=" + chartId +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", firstVisit=" + firstVisit +
+                ", lastVisit=" + lastVisit +
+                ", birthday=" + birthday +
+                ", memo='" + memo + '\'' +
+                '}';
     }
 }
