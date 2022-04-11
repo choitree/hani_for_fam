@@ -9,10 +9,25 @@ import org.springframework.stereotype.Service;
 @Service
 public class PatientService {
 
-    private PatientRepository patientRepository;
 
-    public PatientService(PatientRepository patientRepository) {
+    Logger logger = LoggerFactory.getLogger(PatientService.class);
+
+    private final PatientRepository patientRepository;
+    private final IncomeRepository incomeRepository;
+
+    public PatientService(PatientRepository patientRepository, IncomeRepository incomeRepository) {
         this.patientRepository = patientRepository;
+        this.incomeRepository = incomeRepository;
+    }
+
+    public PatientResponseDTO showPatient(Long id) {
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        logger.info("patient : {}", patient);
+        List<Income> incomes = incomeRepository.findAllByPatient(patient);
+        return PatientResponseDTO.from(patient, incomes);
+    }
+
+    public void showAllPatients() {
     }
 
     //pid 중복 검사
