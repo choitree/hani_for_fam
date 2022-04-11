@@ -46,6 +46,8 @@ public class PatientService {
     }
 
     public void deletePatient(Long id) {
+        Patient patient = patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("해당 번호의 환자가 존재하지 않습니다."));
+        patientRepository.delete(patient);
     }
 
 }
