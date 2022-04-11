@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class PatientRequestDTO {
 
-    private Integer pId;
+    private Integer chartId;
     private String name;
     private String sex;
     private String phone;

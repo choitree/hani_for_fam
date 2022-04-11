@@ -32,7 +32,7 @@ public class PatientService {
 
     //pid 중복 검사
     public void createPatient(PatientRequestDTO patientRequestDTO) {
-        if(patientRepository.findBypId(patientRequestDTO.getPId()).isPresent()) {
+        if(patientRepository.findBychartId(patientRequestDTO.getChartId()).isPresent()) {
             throw new PatientExistException("이미 해당 번호의 환자가 존재합니다.");
         }
         Patient patient = Patient.createPatient(patientRequestDTO);
