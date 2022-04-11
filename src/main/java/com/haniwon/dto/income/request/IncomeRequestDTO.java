@@ -22,5 +22,6 @@ public class IncomeRequestDTO {
     private String symptom;
     private Boolean isAcupuncture;
     private String memo;
+    private LocalDate birthday;
 
 }
