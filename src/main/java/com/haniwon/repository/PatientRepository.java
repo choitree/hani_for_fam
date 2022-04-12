@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,5 +20,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long>, Patient
     public Optional<Patient> findById(Long id);
 
     public Optional<Patient> findByNameAndBirthday(String name, LocalDate birthday);
+
+    public List<Patient> findAllByName(String name);
 
 }

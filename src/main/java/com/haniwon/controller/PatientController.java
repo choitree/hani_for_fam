@@ -2,8 +2,8 @@ package com.haniwon.controller;
 
 import com.haniwon.dto.ResponseDTO;
 import com.haniwon.dto.patient.request.PatientRequestDTO;
+import com.haniwon.dto.patient.response.MultiPatientResponseDTO;
 import com.haniwon.dto.patient.response.PatientResponseDTO;
-import com.haniwon.repository.PatientRepository;
 import com.haniwon.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +50,15 @@ public class PatientController {
     }
 
     @GetMapping
-    public ResponseEntity<ResponseDTO> showAllPatients() {
-        patientService.showAllPatients();
-        return ResponseEntity.ok(new ResponseDTO("OK"));
+    public ResponseEntity<MultiPatientResponseDTO> showSameNamePatients(@RequestParam String name) {
+        logger.info("이름이 같은 환자 조회");
+        return ResponseEntity.ok(patientService.showSameNamePatients(name));
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<MultiPatientResponseDTO> showAllPatients() {
+        logger.info("전체 환자 조회");
+        return ResponseEntity.ok(patientService.showAllPatients());
     }
 
 

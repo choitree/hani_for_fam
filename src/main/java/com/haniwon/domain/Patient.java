@@ -39,13 +39,13 @@ public class Patient {
     private List<Income> incomes = new ArrayList<>();
 
     public static Patient createPatient(PatientRequestDTO patientDTO) {
-        if(patientDTO.getLastVisit() == null) {
+        if(patientDTO.getFirstVisit() == null) {
             return Patient.builder()
                     .chartId(patientDTO.getChartId())
                     .name(patientDTO.getName())
                     .sex(patientDTO.getSex())
                     .phone(patientDTO.getPhone())
-                    .firstVisit(patientDTO.getFirstVisit())
+                    .firstVisit(LocalDate.now())
                     .lastVisit(LocalDate.now())
                     .birthday(patientDTO.getBirthday())
                     .memo(patientDTO.getMemo())
@@ -57,7 +57,7 @@ public class Patient {
                 .sex(patientDTO.getSex())
                 .phone(patientDTO.getPhone())
                 .firstVisit(patientDTO.getFirstVisit())
-                .lastVisit(patientDTO.getLastVisit())
+                .lastVisit(LocalDate.now())
                 .birthday(patientDTO.getBirthday())
                 .memo(patientDTO.getMemo())
                 .build();
@@ -83,18 +83,4 @@ public class Patient {
         this.lastVisit = lastVisit;
     }
 
-    @Override
-    public String toString() {
-        return "Patient{" +
-                "id=" + id +
-                ", chartId=" + chartId +
-                ", name='" + name + '\'' +
-                ", sex='" + sex + '\'' +
-                ", phone='" + phone + '\'' +
-                ", firstVisit=" + firstVisit +
-                ", lastVisit=" + lastVisit +
-                ", birthday=" + birthday +
-                ", memo='" + memo + '\'' +
-                '}';
-    }
 }
