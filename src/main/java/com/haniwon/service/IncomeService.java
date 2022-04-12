@@ -5,6 +5,7 @@ import com.haniwon.domain.Patient;
 import com.haniwon.dto.income.request.IncomeRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomeInfoRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomePatientRequestDTO;
+import com.haniwon.dto.income.response.IncomeResponseDTO;
 import com.haniwon.repository.IncomeRepository;
 import com.haniwon.repository.PatientRepository;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,11 @@ public class IncomeService {
     public IncomeService(PatientRepository patientRepository, IncomeRepository incomeRepository) {
         this.patientRepository = patientRepository;
         this.incomeRepository = incomeRepository;
+    }
+
+    public IncomeResponseDTO showIncome(Long incomeId) {
+        Income income = incomeRepository.findById(incomeId).orElseThrow(() -> new NoSuchElementException("조회할 매출에 정보가 존재하지 않습니다."));
+        return IncomeResponseDTO.from(income);
     }
 
     @Transactional
