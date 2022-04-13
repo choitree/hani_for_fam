@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class UpdateIncomeInfoRequestDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
-    private Integer amount;
+    private Long amount;
     private Boolean isCash;
     private Boolean isPay;
     private String symptom;
