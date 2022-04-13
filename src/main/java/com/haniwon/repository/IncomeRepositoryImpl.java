@@ -7,6 +7,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +55,24 @@ public class IncomeRepositoryImpl implements IncomeRepositoryCustom{
         return queryFactory.selectFrom(income)
                 .where(income.patient.eq(patient))
                 .fetchCount();
+    }
+
+    public List<Income> findAllByMonth(YearMonth yearMonth) {
+        return queryFactory.selectFrom(income)
+                .where(income.date.year().eq(yearMonth.getYear()).and(income.date.month().eq(yearMonth.getMonthValue())))
+                .fetch();
+    }
+
+    public List<Income> findAllByYear(Year year) {
+        return queryFactory.selectFrom(income)
+                .where(income.date.year().eq(year.getValue()))
+                .fetch();
+    }
+
+    public List<Income> findAllByPeriod(LocalDate date1, LocalDate date2) {
+        return queryFactory.selectFrom(income)
+                .where(income.date.between(date1, date2))
+                .fetch();
     }
 
 //    InvalidDataAccessApiUsageException

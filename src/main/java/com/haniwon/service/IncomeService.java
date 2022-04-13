@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -28,11 +30,6 @@ public class IncomeService {
         this.incomeRepository = incomeRepository;
     }
 
-    public IncomeResponseDTO showIncome(Long incomeId) {
-        Income income = incomeRepository.findById(incomeId).orElseThrow(() -> new NoSuchElementException("조회할 매출에 정보가 존재하지 않습니다."));
-        return IncomeResponseDTO.from(income);
-    }
-
     @Transactional
     public void addIncome(IncomeRequestDTO incomeRequestDTO, Long patientId) {
         Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("해당 환자가 존재하지 않아 등록이 불가합니다."));
@@ -43,11 +40,63 @@ public class IncomeService {
         }
         incomeRepository.save(income);
         LocalDate lastVisit = incomeRequestDTO.getDate();
-       if(incomeRepository.findLastVisitIncomeByPatient(patient).isPresent()) {
-           lastVisit = incomeRepository.findLastVisitIncomeByPatient(patient).get().getDate();
-       }
+        if(incomeRepository.findLastVisitIncomeByPatient(patient).isPresent()) {
+            lastVisit = incomeRepository.findLastVisitIncomeByPatient(patient).get().getDate();
+        }
         patient.updateLastVisit(lastVisit);
         patientRepository.save(patient);
+    }
+
+    public IncomeResponseDTO showIncome(Long incomeId) {
+        Income income = incomeRepository.findById(incomeId).orElseThrow(() -> new NoSuchElementException("조회할 매출에 정보가 존재하지 않습니다."));
+        return IncomeResponseDTO.from(income);
+    }
+
+    public IncomeSummeryResponseDTO showIncomeByDay(LocalDate date) {
+        List<Income> incomes = incomeRepository.findAllByDate(date);
+
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
+    }
+
+    public IncomeSummeryResponseDTO showIncomePerMonth(YearMonth yearMonth) {
+        List<Income> incomes = incomeRepository.findAllByMonth(yearMonth);
+
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
+    }
+
+    public IncomeSummeryResponseDTO showIncomePerYear(Year year) {
+        List<Income> incomes = incomeRepository.findAllByYear(year);
+
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
+    }
+
+    public IncomeSummeryResponseDTO showIncomeByPeriod(LocalDate date1, LocalDate date2) {
+        List<Income> incomes = incomeRepository.findAllByPeriod(date1, date2);
+
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
+    }
+
+    public IncomeSummeryResponseDTO showIncomeByPatient(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("조회할 환자 정보가 존재하지 않습니다."));
+        List<Income> incomes = incomeRepository.findAllByPatient(patient);
+
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
     }
 
     @Transactional
@@ -86,13 +135,4 @@ public class IncomeService {
         patientRepository.save(patient);
     }
 
-    public IncomeSummeryResponseDTO showIncomeByPatient(Long patientId) {
-        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("조회할 환자 정보가 존재하지 않습니다."));
-        List<Income> incomes = incomeRepository.findAllByPatient(patient);
-
-        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
-                .map(income -> showIncome(income.getId()))
-                .collect(Collectors.toList());
-        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
-    }
 }

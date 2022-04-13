@@ -9,9 +9,14 @@ import com.haniwon.dto.income.response.IncomeSummeryResponseDTO;
 import com.haniwon.service.IncomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.YearMonth;
 
 @Controller
 @RequestMapping("/income")
@@ -29,6 +34,29 @@ public class IncomeController {
     public ResponseEntity<IncomeResponseDTO> showIncome(@PathVariable Long incomeId) {
         logger.info("매출 1건 조회하기");
         return ResponseEntity.ok(incomeService.showIncome(incomeId));
+    }
+
+    @GetMapping("/day/{date}")
+    public ResponseEntity<IncomeSummeryResponseDTO> showIncomePerDay(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        logger.info("하루에 대한 매출 조회하기");
+        return ResponseEntity.ok(incomeService.showIncomeByDay(date));
+    }
+
+    @GetMapping("/month/{yearMonth}")
+    public ResponseEntity<IncomeSummeryResponseDTO> showIncomePerMonth(@PathVariable @DateTimeFormat(pattern = "yyyy-MM")YearMonth yearMonth) {
+        logger.info("월별 매출 조회하기");
+        return ResponseEntity.ok(incomeService.showIncomePerMonth(yearMonth));
+    }
+    @GetMapping("/year/{year}")
+    public ResponseEntity<IncomeSummeryResponseDTO> showIncomePerYear(@PathVariable @DateTimeFormat(pattern = "yyyy")Year year) {
+        logger.info("년별 매출 조회하기");
+        return ResponseEntity.ok(incomeService.showIncomePerYear(year));
+    }
+    @GetMapping("")
+    public ResponseEntity<IncomeSummeryResponseDTO> showIncomeByPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date1,
+                                                                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date2) {
+        logger.info("기간별 매출 조회하기");
+        return ResponseEntity.ok(incomeService.showIncomeByPeriod(date1, date2));
     }
 
     @GetMapping("/patient/{patientId}")
