@@ -5,6 +5,7 @@ import com.haniwon.dto.income.request.IncomeRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomeInfoRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomePatientRequestDTO;
 import com.haniwon.dto.income.response.IncomeResponseDTO;
+import com.haniwon.dto.income.response.IncomeSummeryResponseDTO;
 import com.haniwon.service.IncomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,12 @@ public class IncomeController {
     public ResponseEntity<IncomeResponseDTO> showIncome(@PathVariable Long incomeId) {
         logger.info("매출 1건 조회하기");
         return ResponseEntity.ok(incomeService.showIncome(incomeId));
+    }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<IncomeSummeryResponseDTO> showIncomeByPatient(@PathVariable Long patientId) {
+        logger.info("환자 1명에 대한 매출 조회하기");
+        return ResponseEntity.ok(incomeService.showIncomeByPatient(patientId));
     }
 
     @PostMapping("/{patientId}")

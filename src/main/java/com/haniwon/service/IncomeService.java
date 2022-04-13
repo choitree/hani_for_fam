@@ -6,13 +6,16 @@ import com.haniwon.dto.income.request.IncomeRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomeInfoRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomePatientRequestDTO;
 import com.haniwon.dto.income.response.IncomeResponseDTO;
+import com.haniwon.dto.income.response.IncomeSummeryResponseDTO;
 import com.haniwon.repository.IncomeRepository;
 import com.haniwon.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class IncomeService {
@@ -83,4 +86,13 @@ public class IncomeService {
         patientRepository.save(patient);
     }
 
+    public IncomeSummeryResponseDTO showIncomeByPatient(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("조회할 환자 정보가 존재하지 않습니다."));
+        List<Income> incomes = incomeRepository.findAllByPatient(patient);
+
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
+    }
 }
