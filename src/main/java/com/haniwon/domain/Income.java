@@ -25,7 +25,7 @@ public class Income {
     private Long id;
 
     private LocalDate date;
-    private Integer amount;
+    private Long amount;
     private Boolean isCash;
     private Boolean isPay;
     private String symptom;
@@ -33,11 +33,7 @@ public class Income {
     private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumns(value = {
-            @JoinColumn(name = "patient_id", referencedColumnName = "id"),
-            @JoinColumn(name = "patient_name", referencedColumnName = "name"),
-            @JoinColumn(name = "patient_birthday", referencedColumnName = "birthday")
-    } , foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "patient_id", referencedColumnName = "id")
     private Patient patient;
 
     public static Income createIncome(IncomeRequestDTO incomeDTO, Patient patient) {
