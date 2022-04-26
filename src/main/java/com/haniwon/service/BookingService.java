@@ -9,7 +9,9 @@ import com.haniwon.repository.booking.BookingRepository;
 import com.haniwon.repository.patient.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class BookingService {
@@ -48,5 +50,13 @@ public class BookingService {
     public BookingResponseDTO showBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("조회하려는 예약 건이 존재하지 않습니다."));
         return BookingResponseDTO.from(booking);
+    }
+
+    public List<BookingResponseDTO> showBookingByPatient(Long patientId) {
+        Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("조회하려는 환자 정보가 존재하지 않습니다."));
+        List<Booking> bookings = bookingRepository.findAllByPatient(patient);
+        return bookings.stream()
+                .map(booking -> showBooking(booking.getId()))
+                .collect(Collectors.toList());
     }
 }

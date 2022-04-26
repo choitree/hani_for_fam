@@ -10,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Controller
 @RequestMapping("/booking")
 public class BookingController {
@@ -28,6 +31,13 @@ public class BookingController {
         logger.info("예약 내역 1건 조회");
         return ResponseEntity.ok(bookingService.showBooking(bookingId));
     }
+
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<BookingResponseDTO>> showBookingsByPatient(@PathVariable Long patientId) {
+        logger.info("환자별 예약 조회");
+        return ResponseEntity.ok(bookingService.showBookingByPatient(patientId));
+    }
+
     @PostMapping
     public ResponseEntity<ResponseDTO> createBooking(@RequestBody BookingRequestDTO bookingRequestDTO, @RequestParam Long patientId) {
         bookingService.createBooking(bookingRequestDTO, patientId);
