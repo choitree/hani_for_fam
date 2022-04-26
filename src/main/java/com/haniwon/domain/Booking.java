@@ -33,4 +33,8 @@ public class Booking {
                 .patient(patient)
                 .build();
     }
+
+    public void updateBooking(LocalDateTime bookingTime) {
+        this.bookingTime = bookingTime;
+    }
 }
