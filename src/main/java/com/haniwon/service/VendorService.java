@@ -46,4 +46,10 @@ public class VendorService {
                 .collect(Collectors.toList());
     }
 
+    public void updateVendor(VendorRequestDTO vendorRequestDTO, Long vendorId) {
+        Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NoSuchElementException("수정할 거래처가 존재하지 않습니다."));
+        vendor.updateVendor(vendorRequestDTO);
+        vendorRepository.save(vendor);
+    }
+
 }
