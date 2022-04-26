@@ -30,4 +30,9 @@ public class VendorController {
         return ResponseEntity.ok(new ResponseDTO("ok"));
     }
 
+    @GetMapping("/{vendorId}")
+    public ResponseEntity<VendorResponseDTO> showVendor(@PathVariable Long vendorId) {
+        return ResponseEntity.ok(vendorService.showVendor(vendorId));
+    }
+
 }
