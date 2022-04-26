@@ -33,4 +33,10 @@ public class VendorService {
         vendorRepository.save(vendor);
     }
 
+    public VendorResponseDTO showVendor(Long vendorId) {
+        Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NoSuchElementException("해당 거래처가 존재하지 않습니다."));
+        List<Outcome> outcomes = outcomeRepository.findAllByVendor(vendor);
+        return VendorResponseDTO.from(vendor, outcomes);
+    }
+
 }
