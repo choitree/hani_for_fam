@@ -9,6 +9,8 @@ import com.haniwon.repository.booking.BookingRepository;
 import com.haniwon.repository.patient.PatientRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -55,6 +57,13 @@ public class BookingService {
     public List<BookingResponseDTO> showBookingByPatient(Long patientId) {
         Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("조회하려는 환자 정보가 존재하지 않습니다."));
         List<Booking> bookings = bookingRepository.findAllByPatient(patient);
+        return bookings.stream()
+                .map(booking -> showBooking(booking.getId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<BookingResponseDTO> showWeekBookings(LocalDate startDate, LocalDate endDate) {
+        List<Booking> bookings = bookingRepository.findAllBookingByWeek(startDate, endDate);
         return bookings.stream()
                 .map(booking -> showBooking(booking.getId()))
                 .collect(Collectors.toList());
