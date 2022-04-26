@@ -39,4 +39,11 @@ public class VendorService {
         return VendorResponseDTO.from(vendor, outcomes);
     }
 
+    public List<VendorResponseDTO> showAllVendor() {
+        List<Vendor> vendors = vendorRepository.findAll();
+        return vendors.stream()
+                .map(vendor -> showVendor(vendor.getId()))
+                .collect(Collectors.toList());
+    }
+
 }
