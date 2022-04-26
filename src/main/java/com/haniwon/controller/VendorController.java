@@ -46,4 +46,10 @@ public class VendorController {
         return ResponseEntity.ok(new ResponseDTO("ok"));
     }
 
+    @DeleteMapping("/{vendorId}")
+    public ResponseEntity<ResponseDTO> deleteVendor(@PathVariable Long vendorId) {
+        vendorService.deleteVendor(vendorId);
+        return ResponseEntity.ok(new ResponseDTO("ok"));
+    }
+
 }

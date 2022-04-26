@@ -52,4 +52,9 @@ public class VendorService {
         vendorRepository.save(vendor);
     }
 
+    public void deleteVendor(Long vendorId) {
+        Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NoSuchElementException("삭제할 거래처가 존재하지 않습니다."));
+        vendorRepository.delete(vendor);
+    }
+
 }
