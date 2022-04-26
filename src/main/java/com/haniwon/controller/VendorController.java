@@ -40,4 +40,10 @@ public class VendorController {
         return ResponseEntity.ok(vendorService.showAllVendor());
     }
 
+    @PutMapping("/{vendorId}")
+    public ResponseEntity<ResponseDTO> updateVendor(VendorRequestDTO vendorRequestDTO, @PathVariable Long vendorId) {
+        vendorService.updateVendor(vendorRequestDTO, vendorId);
+        return ResponseEntity.ok(new ResponseDTO("ok"));
+    }
+
 }
