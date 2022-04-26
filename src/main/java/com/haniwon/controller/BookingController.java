@@ -6,10 +6,12 @@ import com.haniwon.dto.booking.response.BookingResponseDTO;
 import com.haniwon.service.BookingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,6 +40,11 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.showBookingByPatient(patientId));
     }
 
+    @GetMapping("/week")
+    public ResponseEntity<List<BookingResponseDTO>> showWeekBookings(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
+        logger.info("한 주 예약 조회");
+        return ResponseEntity.ok(bookingService.showWeekBookings(startDate, endDate));
+    }
     @PostMapping
     public ResponseEntity<ResponseDTO> createBooking(@RequestBody BookingRequestDTO bookingRequestDTO, @RequestParam Long patientId) {
         bookingService.createBooking(bookingRequestDTO, patientId);
