@@ -3,6 +3,7 @@ package com.haniwon.service;
 import com.haniwon.domain.Booking;
 import com.haniwon.domain.Patient;
 import com.haniwon.dto.booking.request.BookingRequestDTO;
+import com.haniwon.dto.booking.response.BookingResponseDTO;
 import com.haniwon.exception.BookingExistException;
 import com.haniwon.repository.booking.BookingRepository;
 import com.haniwon.repository.patient.PatientRepository;
@@ -42,5 +43,10 @@ public class BookingService {
     public void deleteBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("삭제하려는 예약 정보가 존재하지 않습니다."));
         bookingRepository.delete(booking);
+    }
+
+    public BookingResponseDTO showBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("조회하려는 예약 건이 존재하지 않습니다."));
+        return BookingResponseDTO.from(booking);
     }
 }
