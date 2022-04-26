@@ -35,4 +35,9 @@ public class VendorController {
         return ResponseEntity.ok(vendorService.showVendor(vendorId));
     }
 
+    @GetMapping
+    public ResponseEntity<List<VendorResponseDTO>> showAllVendor() {
+        return ResponseEntity.ok(vendorService.showAllVendor());
+    }
+
 }
