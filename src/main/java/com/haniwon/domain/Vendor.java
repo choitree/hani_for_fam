@@ -39,4 +39,10 @@ public class Vendor {
                 .build();
     }
 
+    public void updateVendor(VendorRequestDTO vendorRequestDTO) {
+        this.companyName = vendorRequestDTO.getCompanyName();
+        this.manager = vendorRequestDTO.getManager();
+        this.phone = vendorRequestDTO.getPhone();
+    }
+
 }
