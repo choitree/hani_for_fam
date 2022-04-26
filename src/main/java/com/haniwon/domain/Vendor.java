@@ -1,5 +1,6 @@
 package com.haniwon.domain;
 
+import com.haniwon.dto.vendor.request.VendorRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,11 +22,21 @@ public class Vendor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String companyName;
+
     private String manager;
     private String phone;
 
     @OneToMany(mappedBy = "vendor")
     private List<Outcome> outcomes = new ArrayList<>();
+
+    public static Vendor createVendor(VendorRequestDTO vendorRequestDTO) {
+        return Vendor.builder()
+                .companyName(vendorRequestDTO.getCompanyName())
+                .manager(vendorRequestDTO.getManager())
+                .phone(vendorRequestDTO.getPhone())
+                .build();
+    }
 
 }
