@@ -62,6 +62,13 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
+    public List<BookingResponseDTO> showBookingsByDay(LocalDate date) {
+        List<Booking> bookings = bookingRepository.findAllBookingByDate(date);
+        return bookings.stream()
+                .map(booking -> showBooking(booking.getId()))
+                .collect(Collectors.toList());
+    }
+
     public List<BookingResponseDTO> showWeekBookings(LocalDate startDate, LocalDate endDate) {
         List<Booking> bookings = bookingRepository.findAllBookingByWeek(startDate, endDate);
         return bookings.stream()

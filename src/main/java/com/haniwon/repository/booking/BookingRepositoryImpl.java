@@ -22,6 +22,13 @@ public class BookingRepositoryImpl implements BookingRepositoryCustom{
                             .fetchOne());
     }
 
+    public List<Booking> findAllBookingByDate(LocalDate date) {
+        return queryFactory
+                .selectFrom(QBooking.booking)
+                .where(QBooking.booking.bookingTime.between(date.atStartOfDay(), date.plusDays(1L).atStartOfDay()))
+                .fetch();
+    }
+
     public List<Booking> findAllBookingByWeek(LocalDate startDate, LocalDate endDate) {
         return queryFactory
                 .selectFrom(QBooking.booking)

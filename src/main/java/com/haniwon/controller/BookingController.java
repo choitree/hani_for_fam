@@ -40,6 +40,12 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.showBookingByPatient(patientId));
     }
 
+    @GetMapping("/day/{date}")
+    public ResponseEntity<List<BookingResponseDTO>> showBookingsByDay(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        logger.info("하루 예약 조회");
+        return ResponseEntity.ok(bookingService.showBookingsByDay(date));
+    }
+
     @GetMapping("/week")
     public ResponseEntity<List<BookingResponseDTO>> showWeekBookings(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
         logger.info("한 주 예약 조회");

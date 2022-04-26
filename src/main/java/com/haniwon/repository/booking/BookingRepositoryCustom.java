@@ -11,6 +11,8 @@ public interface BookingRepositoryCustom {
 
     public Optional<Booking> findByBookingTime(LocalDateTime bookingTime);
 
+    public List<Booking> findAllBookingByDate(LocalDate date);
+
     public List<Booking> findAllBookingByWeek(LocalDate startDate, LocalDate endDate);
 
 }
