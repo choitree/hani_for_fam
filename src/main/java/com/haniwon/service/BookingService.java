@@ -3,7 +3,6 @@ package com.haniwon.service;
 import com.haniwon.domain.Booking;
 import com.haniwon.domain.Patient;
 import com.haniwon.dto.booking.request.BookingRequestDTO;
-import com.haniwon.dto.booking.request.BookingUpdateRequestDTO;
 import com.haniwon.exception.BookingExistException;
 import com.haniwon.repository.booking.BookingRepository;
 import com.haniwon.repository.patient.PatientRepository;
@@ -31,12 +30,12 @@ public class BookingService {
         bookingRepository.save(booking);
     }
 
-    public void updateBooking(BookingUpdateRequestDTO bookingUpdateRequestDTO, Long bookingId) {
+    public void updateBooking(BookingRequestDTO bookingRequestDTO, Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("수정하려는 예약 건이 존재하지 않습니다."));
-        if(bookingRepository.findByBookingTime(bookingUpdateRequestDTO.getBookingTime()).isPresent()) {
+        if(bookingRepository.findByBookingTime(bookingRequestDTO.getBookingTime()).isPresent()) {
             throw new BookingExistException("변경하려는 시간이 이미 예약한 환자가 있습니다.");
         }
-        booking.updateBooking(bookingUpdateRequestDTO.getBookingTime());
+        booking.updateBooking(bookingRequestDTO.getBookingTime());
         bookingRepository.save(booking);
     }
 

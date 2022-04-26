@@ -2,7 +2,6 @@ package com.haniwon.controller;
 
 import com.haniwon.dto.ResponseDTO;
 import com.haniwon.dto.booking.request.BookingRequestDTO;
-import com.haniwon.dto.booking.request.BookingUpdateRequestDTO;
 import com.haniwon.service.BookingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,8 @@ public class BookingController {
     }
 
     @PutMapping("/{bookingId}")
-    public ResponseEntity<ResponseDTO> updateBooking(@RequestBody BookingUpdateRequestDTO bookingUpdateRequestDTO, @PathVariable Long bookingId) {
-        bookingService.updateBooking(bookingUpdateRequestDTO, bookingId);
+    public ResponseEntity<ResponseDTO> updateBooking(@RequestBody BookingRequestDTO bookingRequestDTO, @PathVariable Long bookingId) {
+        bookingService.updateBooking(bookingRequestDTO, bookingId);
         return ResponseEntity.ok(new ResponseDTO("ok"));
     }
 

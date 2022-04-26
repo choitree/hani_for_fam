@@ -1,17 +1,17 @@
 package com.haniwon.dto.booking.request;
 
-import com.haniwon.domain.Patient;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Getter
 public class BookingRequestDTO {
 
-    private final LocalDateTime bookingTime;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime bookingTime;
 
 }
