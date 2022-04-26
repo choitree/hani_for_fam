@@ -32,11 +32,16 @@ public class BookingService {
     }
 
     public void updateBooking(BookingUpdateRequestDTO bookingUpdateRequestDTO, Long bookingId) {
-        Booking booking = bookingRepository.findbyId(bookingId).orElseThrow(() -> new NoSuchElementException("수정하려는 예약 건이 존재하지 않습니다."));
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("수정하려는 예약 건이 존재하지 않습니다."));
         if(bookingRepository.findByBookingTime(bookingUpdateRequestDTO.getBookingTime()).isPresent()) {
             throw new BookingExistException("변경하려는 시간이 이미 예약한 환자가 있습니다.");
         }
         booking.updateBooking(bookingUpdateRequestDTO.getBookingTime());
         bookingRepository.save(booking);
+    }
+
+    public void deleteBooking(Long bookingId) {
+        Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new NoSuchElementException("삭제하려는 예약 정보가 존재하지 않습니다."));
+        bookingRepository.delete(booking);
     }
 }

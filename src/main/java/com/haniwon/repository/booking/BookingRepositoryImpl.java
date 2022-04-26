@@ -14,8 +14,9 @@ public class BookingRepositoryImpl implements BookingRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     public Optional<Booking> findByBookingTime(LocalDateTime bookingTime) {
-        return Optional.ofNullable(queryFactory.selectFrom(QBooking.booking)
-                .where(QBooking.booking.bookingTime.eq(bookingTime))
-                .fetchOne());
+        return Optional.ofNullable(queryFactory
+                            .selectFrom(QBooking.booking)
+                            .where(QBooking.booking.bookingTime.eq(bookingTime))
+                            .fetchOne());
     }
 }

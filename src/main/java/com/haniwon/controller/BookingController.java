@@ -29,4 +29,10 @@ public class BookingController {
         bookingService.updateBooking(bookingUpdateRequestDTO, bookingId);
         return ResponseEntity.ok(new ResponseDTO("ok"));
     }
+
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<ResponseDTO> deleteBooking(@PathVariable Long bookingId) {
+        bookingService.deleteBooking(bookingId);
+        return ResponseEntity.ok(new ResponseDTO("ok"));
+    }
 }
