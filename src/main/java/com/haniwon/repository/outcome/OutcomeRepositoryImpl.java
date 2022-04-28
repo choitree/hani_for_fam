@@ -6,6 +6,7 @@ import com.haniwon.domain.Vendor;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -16,6 +17,12 @@ public class OutcomeRepositoryImpl implements OutcomeRepositoryCustom{
     public List<Outcome> findAllByVendor(Vendor vendor) {
         return queryFactory.selectFrom(QOutcome.outcome)
                 .where(QOutcome.outcome.vendor.eq(vendor))
+                .fetch();
+    }
+
+    public List<Outcome> findAllByDay(LocalDate date) {
+        return queryFactory.selectFrom(QOutcome.outcome)
+                .where(QOutcome.outcome.date.eq(date))
                 .fetch();
     }
 

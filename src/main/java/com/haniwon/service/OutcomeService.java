@@ -5,11 +5,15 @@ import com.haniwon.domain.Vendor;
 import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
 import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
 import com.haniwon.dto.outcome.response.OutcomeResponseDTO;
+import com.haniwon.dto.outcome.response.OutcomeSummeryResponseDTO;
 import com.haniwon.repository.outcome.OutcomeRepository;
 import com.haniwon.repository.vendor.VendorRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class OutcomeService {
@@ -50,5 +54,13 @@ public class OutcomeService {
     public OutcomeResponseDTO showOutcome(Long outcomeId) {
         Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("조회하려는 매입이 존재하지 않습니다."));
         return OutcomeResponseDTO.from(outcome);
+    }
+
+    public OutcomeSummeryResponseDTO showOutcomesByDay(LocalDate date) {
+        List<Outcome> outcomes = outcomeRepository.findAllByDay(date);
+        List<OutcomeResponseDTO> outcomeResponseDTOS = outcomes.stream()
+                .map(outcome -> showOutcome(outcome.getId()))
+                .collect(Collectors.toList());
+        return OutcomeSummeryResponseDTO.from(outcomeResponseDTOS);
     }
 }

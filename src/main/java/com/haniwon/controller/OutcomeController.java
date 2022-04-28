@@ -1,15 +1,19 @@
 package com.haniwon.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.haniwon.dto.ResponseDTO;
 import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
 import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
 import com.haniwon.dto.outcome.response.OutcomeResponseDTO;
+import com.haniwon.dto.outcome.response.OutcomeSummeryResponseDTO;
 import com.haniwon.service.OutcomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/outcome")
@@ -27,6 +31,13 @@ public class OutcomeController {
     public ResponseEntity<OutcomeResponseDTO> showOutcome(@PathVariable Long outcomeId) {
         logger.info("매입 단건 조회하기");
         return ResponseEntity.ok(outcomeService.showOutcome(outcomeId));
+    }
+
+    @GetMapping("/day/{date}")
+    public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomesByDay(@PathVariable
+                                                                       @JsonFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        logger.info("하루 매입 조회하기");
+        return ResponseEntity.ok(outcomeService.showOutcomesByDay(date));
     }
 
     @PostMapping("/{vendorId}")

@@ -26,7 +26,7 @@ public class Outcome {
     private LocalDate date;
     private String item;
     //금액
-    private Integer amount;
+    private Long amount;
     private String memo;
 
     @ManyToOne(fetch = FetchType.LAZY)

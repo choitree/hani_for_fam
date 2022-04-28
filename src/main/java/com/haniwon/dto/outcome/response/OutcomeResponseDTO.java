@@ -19,7 +19,7 @@ public class OutcomeResponseDTO {
 
     private final String item;
     //금액
-    private final Integer amount;
+    private final Long amount;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final String memo;

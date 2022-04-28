@@ -16,7 +16,7 @@ public class OutcomeRequestDTO {
     private LocalDate date;
 
     private String item;
-    private Integer amount;
+    private Long amount;
     private String memo;
 
 }
