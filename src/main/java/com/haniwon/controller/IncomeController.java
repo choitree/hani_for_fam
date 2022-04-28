@@ -52,11 +52,11 @@ public class IncomeController {
         logger.info("년별 매출 조회하기");
         return ResponseEntity.ok(incomeService.showIncomePerYear(year));
     }
-    @GetMapping("")
-    public ResponseEntity<IncomeSummeryResponseDTO> showIncomeByPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date1,
-                                                                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date2) {
+    @GetMapping("/period")
+    public ResponseEntity<IncomeSummeryResponseDTO> showIncomeByPeriod(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+                                                                        @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate) {
         logger.info("기간별 매출 조회하기");
-        return ResponseEntity.ok(incomeService.showIncomeByPeriod(date1, date2));
+        return ResponseEntity.ok(incomeService.showIncomeByPeriod(startDate, endDate));
     }
 
     @GetMapping("/patient/{patientId}")
