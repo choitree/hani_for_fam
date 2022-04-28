@@ -1,7 +1,9 @@
 package com.haniwon.dto.outcome.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.haniwon.domain.Outcome;
 import com.haniwon.domain.Stock;
+import com.haniwon.domain.Vendor;
 import com.haniwon.dto.stock.StockResponseDTO;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,30 +20,20 @@ public class OutcomeResponseDTO {
     private final String item;
     //금액
     private final Integer amount;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private final String memo;
 
-    private final List<StockResponseDTO> stocks;
+    private final String vendorName;
 
-    private static List<StockResponseDTO> convertStocks(List<Stock> stocks) {
-        return stocks.stream()
-                .map(stock -> StockResponseDTO.from(stock))
-                .collect(Collectors.toList());
-
-    }
-    public static OutcomeResponseDTO from(Outcome outcome, List<Stock> stocks) {
-        return OutcomeResponseDTO.builder()
-                .item(outcome.getItem())
-                .amount(outcome.getAmount())
-                .memo(outcome.getMemo())
-                .stocks(convertStocks(stocks))
-                .build();
-    }
 
     public static OutcomeResponseDTO from(Outcome outcome) {
         return OutcomeResponseDTO.builder()
                 .item(outcome.getItem())
                 .amount(outcome.getAmount())
                 .memo(outcome.getMemo())
+                .vendorName(outcome.getVendor().getCompanyName())
                 .build();
     }
+
 }

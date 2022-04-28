@@ -3,6 +3,7 @@ package com.haniwon.controller;
 import com.haniwon.dto.ResponseDTO;
 import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
 import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
+import com.haniwon.dto.outcome.response.OutcomeResponseDTO;
 import com.haniwon.service.OutcomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,12 @@ public class OutcomeController {
 
     public OutcomeController(OutcomeService outcomeService) {
         this.outcomeService = outcomeService;
+    }
+
+    @GetMapping("/{outcomeId}")
+    public ResponseEntity<OutcomeResponseDTO> showOutcome(@PathVariable Long outcomeId) {
+        logger.info("매입 단건 조회하기");
+        return ResponseEntity.ok(outcomeService.showOutcome(outcomeId));
     }
 
     @PostMapping("/{vendorId}")

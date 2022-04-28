@@ -4,6 +4,7 @@ import com.haniwon.domain.Outcome;
 import com.haniwon.domain.Vendor;
 import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
 import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
+import com.haniwon.dto.outcome.response.OutcomeResponseDTO;
 import com.haniwon.repository.outcome.OutcomeRepository;
 import com.haniwon.repository.vendor.VendorRepository;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,10 @@ public class OutcomeService {
     public void deleteOutcome(Long outcomeId) {
         Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("삭제하려는 매입이 존재하지 않습니다."));
         outcomeRepository.delete(outcome);
+    }
+
+    public OutcomeResponseDTO showOutcome(Long outcomeId) {
+        Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("조회하려는 매입이 존재하지 않습니다."));
+        return OutcomeResponseDTO.from(outcome);
     }
 }
