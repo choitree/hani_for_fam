@@ -2,6 +2,7 @@ package com.haniwon.controller;
 
 import com.haniwon.dto.ResponseDTO;
 import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
+import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
 import com.haniwon.service.OutcomeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,9 +30,16 @@ public class OutcomeController {
     }
 
     @PutMapping("/{outcomeId}/info")
-    public ResponseEntity<ResponseDTO> updateOutcome(@RequestBody OutcomeRequestDTO outcomeRequestDTO, @PathVariable Long outcomeId) {
+    public ResponseEntity<ResponseDTO> updateOutcomeInfo(@RequestBody OutcomeRequestDTO outcomeRequestDTO, @PathVariable Long outcomeId) {
         logger.info("매입 세부정보 수정");
         outcomeService.updateOutcomeInfo(outcomeRequestDTO, outcomeId);
+        return ResponseEntity.ok(new ResponseDTO("ok"));
+    }
+
+    @PutMapping("/{outcomeId}/vendor")
+    public ResponseEntity<ResponseDTO> updateOutcomeVendor(@RequestBody UpdateOutcomeVendorRequestDTO updateOutcomeVendorRequestDTO, @PathVariable Long outcomeId) {
+        logger.info("매입에 해당하는 거래처 수정");
+        outcomeService.updateOutcomeVendor(updateOutcomeVendorRequestDTO, outcomeId);
         return ResponseEntity.ok(new ResponseDTO("ok"));
     }
 

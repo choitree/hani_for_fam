@@ -3,6 +3,7 @@ package com.haniwon.service;
 import com.haniwon.domain.Outcome;
 import com.haniwon.domain.Vendor;
 import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
+import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
 import com.haniwon.repository.outcome.OutcomeRepository;
 import com.haniwon.repository.vendor.VendorRepository;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,13 @@ public class OutcomeService {
     public void updateOutcomeInfo(OutcomeRequestDTO outcomeRequestDTO, Long outcomeId) {
         Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("수정하려는 매입이 존재하지 않습니다."));
         outcome.updateOutcomeInfo(outcomeRequestDTO);
+        outcomeRepository.save(outcome);
+    }
+
+    public void updateOutcomeVendor(UpdateOutcomeVendorRequestDTO updateOutcomeVendorRequestDTO, Long outcomeId) {
+        Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("수정하려는 매입이 존재하지 않습니다."));
+        Vendor vendor = vendorRepository.findByCompanyName(updateOutcomeVendorRequestDTO.getCompanyName()).orElseThrow(() -> new NoSuchElementException("수정하려는 거래처가 존재하지 않습니다."));
+        outcome.updateOutcomeOfVendor(vendor);
         outcomeRepository.save(outcome);
     }
 }
