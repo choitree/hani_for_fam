@@ -40,4 +40,9 @@ public class OutcomeService {
         outcome.updateOutcomeOfVendor(vendor);
         outcomeRepository.save(outcome);
     }
+
+    public void deleteOutcome(Long outcomeId) {
+        Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("삭제하려는 매입이 존재하지 않습니다."));
+        outcomeRepository.delete(outcome);
+    }
 }

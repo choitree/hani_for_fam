@@ -43,5 +43,12 @@ public class OutcomeController {
         return ResponseEntity.ok(new ResponseDTO("ok"));
     }
 
+    @DeleteMapping("/{outcomeId}")
+    public ResponseEntity<ResponseDTO> deleteOutcome(@PathVariable Long outcomeId) {
+        logger.info("매입 삭제");
+        outcomeService.deleteOutcome(outcomeId);
+        return ResponseEntity.ok(new ResponseDTO("ok"));
+    }
+
 
 }
