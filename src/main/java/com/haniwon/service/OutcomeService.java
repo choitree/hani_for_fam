@@ -26,4 +26,10 @@ public class OutcomeService {
         Outcome outcome = Outcome.createOutcome(outcomeRequestDTO, vendor);
         outcomeRepository.save(outcome);
     }
+
+    public void updateOutcomeInfo(OutcomeRequestDTO outcomeRequestDTO, Long outcomeId) {
+        Outcome outcome = outcomeRepository.findById(outcomeId).orElseThrow(() -> new NoSuchElementException("수정하려는 매입이 존재하지 않습니다."));
+        outcome.updateOutcomeInfo(outcomeRequestDTO);
+        outcomeRepository.save(outcome);
+    }
 }

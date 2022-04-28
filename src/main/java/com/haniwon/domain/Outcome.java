@@ -45,4 +45,15 @@ public class Outcome {
                 .vendor(vendor)
                 .build();
     }
+
+    public void updateOutcomeInfo(OutcomeRequestDTO outcomeRequestDTO) {
+        this.date = outcomeRequestDTO.getDate();
+        this.item = outcomeRequestDTO.getItem();
+        this.amount = outcomeRequestDTO.getAmount();
+        this.memo = outcomeRequestDTO.getMemo();
+    }
+
+    public void updateOutcomeOfVendor(Vendor vendor) {
+        this.vendor = vendor;
+    }
 }
