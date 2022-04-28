@@ -22,6 +22,24 @@ public class PatientController {
         this.patientService = patientService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PatientResponseDTO> showPatient(@PathVariable Long id) {
+        logger.info("환자 1명 조회");
+        return ResponseEntity.ok(patientService.showPatient(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<MultiPatientResponseDTO> showSameNamePatients(@RequestParam String name) {
+        logger.info("이름이 같은 환자 조회");
+        return ResponseEntity.ok(patientService.showSameNamePatients(name));
+    }
+
+    @GetMapping("/total")
+    public ResponseEntity<MultiPatientResponseDTO> showAllPatients() {
+        logger.info("전체 환자 조회");
+        return ResponseEntity.ok(patientService.showAllPatients());
+    }
+
     @PostMapping
     public ResponseEntity<ResponseDTO> createPatient(@RequestBody PatientRequestDTO patientRequestDTO) {
         logger.info("환자 생성");
@@ -42,24 +60,5 @@ public class PatientController {
         patientService.deletePatient(id);
         return ResponseEntity.ok(new ResponseDTO("OK"));
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<PatientResponseDTO> showPatient(@PathVariable Long id) {
-        logger.info("환자 1명 조회");
-        return ResponseEntity.ok(patientService.showPatient(id));
-    }
-
-    @GetMapping
-    public ResponseEntity<MultiPatientResponseDTO> showSameNamePatients(@RequestParam String name) {
-        logger.info("이름이 같은 환자 조회");
-        return ResponseEntity.ok(patientService.showSameNamePatients(name));
-    }
-
-    @GetMapping("/total")
-    public ResponseEntity<MultiPatientResponseDTO> showAllPatients() {
-        logger.info("전체 환자 조회");
-        return ResponseEntity.ok(patientService.showAllPatients());
-    }
-
 
 }
