@@ -89,4 +89,13 @@ public class OutcomeService {
                 .collect(Collectors.toList());
         return OutcomeSummeryResponseDTO.from(outcomeResponseDTOS);
     }
+
+    public OutcomeSummeryResponseDTO showOutcomesByVendor(Long vendorId) {
+        Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NoSuchElementException("조회하려는 거래처가 존재하지 않습니다."));
+        List<Outcome> outcomes = outcomeRepository.findAllByVendor(vendor);
+        List<OutcomeResponseDTO> outcomeResponseDTOS = outcomes.stream()
+                .map(outcome -> showOutcome(outcome.getId()))
+                .collect(Collectors.toList());
+        return OutcomeSummeryResponseDTO.from(outcomeResponseDTOS);
+    }
 }

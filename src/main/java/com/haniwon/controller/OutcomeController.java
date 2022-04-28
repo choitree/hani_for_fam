@@ -61,6 +61,12 @@ public class OutcomeController {
         return ResponseEntity.ok(outcomeService.showOutcomesByPeriod(startDate, endDate));
     }
 
+    @GetMapping("/vendor/{vendorId}")
+    public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomesByVendor(@PathVariable Long vendorId) {
+        logger.info("거래처 매입 조회하기");
+        return ResponseEntity.ok(outcomeService.showOutcomesByVendor(vendorId));
+    }
+
     @PostMapping("/{vendorId}")
     public ResponseEntity<ResponseDTO> createOutcome(@RequestBody OutcomeRequestDTO outcomeRequestDTO, @PathVariable Long vendorId) {
         logger.info("매입 생성하기");
