@@ -32,6 +32,4 @@ public class PatientRequestDTO {
 
     private String memo;
 
-    private List<Long> incomes;
-
 }
