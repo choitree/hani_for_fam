@@ -7,8 +7,8 @@ import com.haniwon.dto.income.request.UpdateIncomeInfoRequestDTO;
 import com.haniwon.dto.income.request.UpdateIncomePatientRequestDTO;
 import com.haniwon.dto.income.response.IncomeResponseDTO;
 import com.haniwon.dto.income.response.IncomeSummeryResponseDTO;
-import com.haniwon.repository.IncomeRepository;
-import com.haniwon.repository.PatientRepository;
+import com.haniwon.repository.income.IncomeRepository;
+import com.haniwon.repository.patient.PatientRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
