@@ -7,6 +7,7 @@ import com.haniwon.dto.outcome.request.UpdateOutcomeVendorRequestDTO;
 import com.haniwon.dto.outcome.response.OutcomeResponseDTO;
 import com.haniwon.dto.outcome.response.OutcomeSummeryResponseDTO;
 import com.haniwon.service.OutcomeService;
+import io.swagger.models.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.YearMonth;
 
 @Controller
@@ -44,6 +46,11 @@ public class OutcomeController {
     @GetMapping("/month/{yearMonth}")
     public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomeByMonth(@PathVariable @JsonFormat(pattern = "yyyy-MM")YearMonth yearMonth) {
         return ResponseEntity.ok(outcomeService.showOutcomesByMonth(yearMonth));
+    }
+
+    @GetMapping("/year/{year}")
+    public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomesByYear(@PathVariable Year year) {
+        return ResponseEntity.ok(outcomeService.showOutcomesByYear(year));
     }
 
     @PostMapping("/{vendorId}")
