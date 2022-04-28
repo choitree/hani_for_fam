@@ -1,4 +1,4 @@
-package com.haniwon.repository;
+package com.haniwon.repository.income;
 
 import com.haniwon.domain.Income;
 import com.haniwon.domain.Patient;
