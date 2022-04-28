@@ -6,8 +6,8 @@ import com.haniwon.dto.patient.request.PatientRequestDTO;
 import com.haniwon.dto.patient.response.MultiPatientResponseDTO;
 import com.haniwon.dto.patient.response.PatientResponseDTO;
 import com.haniwon.exception.PatientExistException;
-import com.haniwon.repository.IncomeRepository;
-import com.haniwon.repository.PatientRepository;
+import com.haniwon.repository.income.IncomeRepository;
+import com.haniwon.repository.patient.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,6 @@ public class PatientService {
         return MultiPatientResponseDTO.from(patientsResponseDTO);
     }
 
-    //pid 중복 검사
     public void createPatient(PatientRequestDTO patientRequestDTO) {
         if(patientRepository.findBychartId(patientRequestDTO.getChartId()).isPresent()) {
             throw new PatientExistException("이미 해당 번호의 환자가 존재합니다.");

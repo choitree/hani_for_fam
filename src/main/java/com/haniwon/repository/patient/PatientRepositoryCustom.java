@@ -1,4 +1,4 @@
-package com.haniwon.repository;
+package com.haniwon.repository.patient;
 
 public interface PatientRepositoryCustom {
 }

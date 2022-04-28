@@ -1,4 +1,4 @@
-package com.haniwon.repository;
+package com.haniwon.repository.patient;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
