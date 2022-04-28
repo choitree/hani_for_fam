@@ -15,6 +15,7 @@ public class IncomeRequestDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
     private Long amount;
     private String name;
     private Boolean isCash;
