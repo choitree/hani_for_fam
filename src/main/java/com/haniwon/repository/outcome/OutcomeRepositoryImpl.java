@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -23,6 +24,12 @@ public class OutcomeRepositoryImpl implements OutcomeRepositoryCustom{
     public List<Outcome> findAllByDay(LocalDate date) {
         return queryFactory.selectFrom(QOutcome.outcome)
                 .where(QOutcome.outcome.date.eq(date))
+                .fetch();
+    }
+
+    public List<Outcome> findAllByMonth(YearMonth yearMonth) {
+        return queryFactory.selectFrom(QOutcome.outcome)
+                .where(QOutcome.outcome.date.between(yearMonth.atDay(1), yearMonth.atEndOfMonth()))
                 .fetch();
     }
 

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 @Controller
 @RequestMapping("/outcome")
@@ -38,6 +39,11 @@ public class OutcomeController {
                                                                        @JsonFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         logger.info("하루 매입 조회하기");
         return ResponseEntity.ok(outcomeService.showOutcomesByDay(date));
+    }
+
+    @GetMapping("/month/{yearMonth}")
+    public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomeByMonth(@PathVariable @JsonFormat(pattern = "yyyy-MM")YearMonth yearMonth) {
+        return ResponseEntity.ok(outcomeService.showOutcomesByMonth(yearMonth));
     }
 
     @PostMapping("/{vendorId}")

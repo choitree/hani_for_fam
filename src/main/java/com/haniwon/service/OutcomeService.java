@@ -11,6 +11,7 @@ import com.haniwon.repository.vendor.VendorRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -58,6 +59,14 @@ public class OutcomeService {
 
     public OutcomeSummeryResponseDTO showOutcomesByDay(LocalDate date) {
         List<Outcome> outcomes = outcomeRepository.findAllByDay(date);
+        List<OutcomeResponseDTO> outcomeResponseDTOS = outcomes.stream()
+                .map(outcome -> showOutcome(outcome.getId()))
+                .collect(Collectors.toList());
+        return OutcomeSummeryResponseDTO.from(outcomeResponseDTOS);
+    }
+
+    public OutcomeSummeryResponseDTO showOutcomesByMonth(YearMonth yearMonth) {
+        List<Outcome> outcomes = outcomeRepository.findAllByMonth(yearMonth);
         List<OutcomeResponseDTO> outcomeResponseDTOS = outcomes.stream()
                 .map(outcome -> showOutcome(outcome.getId()))
                 .collect(Collectors.toList());
