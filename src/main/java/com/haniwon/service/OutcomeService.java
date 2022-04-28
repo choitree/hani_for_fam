@@ -81,4 +81,12 @@ public class OutcomeService {
                 .collect(Collectors.toList());
         return OutcomeSummeryResponseDTO.from(outcomeResponseDTOS);
     }
+
+    public OutcomeSummeryResponseDTO showOutcomesByPeriod(LocalDate startDate, LocalDate endDate) {
+        List<Outcome> outcomes = outcomeRepository.findAllByPeriod(startDate, endDate);
+        List<OutcomeResponseDTO> outcomeResponseDTOS = outcomes.stream()
+                .map(outcome -> showOutcome(outcome.getId()))
+                .collect(Collectors.toList());
+        return OutcomeSummeryResponseDTO.from(outcomeResponseDTOS);
+    }
 }

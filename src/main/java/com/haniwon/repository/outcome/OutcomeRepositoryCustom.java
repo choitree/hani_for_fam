@@ -17,4 +17,6 @@ public interface OutcomeRepositoryCustom {
     public List<Outcome> findAllByMonth(YearMonth yearMonth);
 
     public List<Outcome> findAllByYear(Year year);
+
+    public List<Outcome> findAllByPeriod(LocalDate startDate, LocalDate endDate);
 }

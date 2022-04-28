@@ -40,4 +40,10 @@ public class OutcomeRepositoryImpl implements OutcomeRepositoryCustom{
                 .fetch();
     }
 
+    public List<Outcome> findAllByPeriod(LocalDate startDate, LocalDate endDate) {
+        return queryFactory.selectFrom(QOutcome.outcome)
+                .where(QOutcome.outcome.date.between(startDate, endDate))
+                .fetch();
+    }
+
 }

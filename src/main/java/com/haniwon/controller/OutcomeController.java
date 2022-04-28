@@ -45,12 +45,20 @@ public class OutcomeController {
 
     @GetMapping("/month/{yearMonth}")
     public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomeByMonth(@PathVariable @JsonFormat(pattern = "yyyy-MM")YearMonth yearMonth) {
+        logger.info("월간 매입 조회하기");
         return ResponseEntity.ok(outcomeService.showOutcomesByMonth(yearMonth));
     }
 
     @GetMapping("/year/{year}")
     public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomesByYear(@PathVariable Year year) {
+        logger.info("년간 매입 조회하기");
         return ResponseEntity.ok(outcomeService.showOutcomesByYear(year));
+    }
+
+    @GetMapping("/period")
+    public ResponseEntity<OutcomeSummeryResponseDTO> showOutcomesByPeriod(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
+        logger.info("기간별 매입 조회하기");
+        return ResponseEntity.ok(outcomeService.showOutcomesByPeriod(startDate, endDate));
     }
 
     @PostMapping("/{vendorId}")
