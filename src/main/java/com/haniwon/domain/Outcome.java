@@ -1,5 +1,6 @@
 package com.haniwon.domain;
 
+import com.haniwon.dto.outcome.request.OutcomeRequestDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,5 +36,13 @@ public class Outcome {
     @OneToMany(mappedBy = "outcome")
     private List<Stock> stocks = new ArrayList<>();
 
-
+    public static Outcome createOutcome(OutcomeRequestDTO outcomeRequestDTO, Vendor vendor) {
+        return Outcome.builder()
+                .date(outcomeRequestDTO.getDate())
+                .item(outcomeRequestDTO.getItem())
+                .amount(outcomeRequestDTO.getAmount())
+                .memo(outcomeRequestDTO.getMemo())
+                .vendor(vendor)
+                .build();
+    }
 }
