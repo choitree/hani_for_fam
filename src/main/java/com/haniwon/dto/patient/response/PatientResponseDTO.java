@@ -7,6 +7,7 @@ import com.haniwon.dto.income.response.IncomeResponseDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -17,14 +18,19 @@ import java.util.stream.Collectors;
 @Getter
 public class PatientResponseDTO {
 
-    private final Integer chartId;
+    private final Long id;
+
+    private final Long chartId;
 
     private final String name;
     private final String sex;
     private final String phone;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final LocalDate firstVisit;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final LocalDate lastVisit;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final LocalDate birthday;
     private final String memo;
 
@@ -38,12 +44,20 @@ public class PatientResponseDTO {
 
     }
 
+    public static String convertPhone(String phone) {
+        String phone1 = phone.substring(0, 3);
+        String phone2 = phone.substring(3, 7);
+        String phone3 = phone.substring(7);
+        return phone1 + "-" + phone2 + "-" + phone3;
+    }
+
     public static PatientResponseDTO from(Patient patient, List<Income> incomes) {
         return PatientResponseDTO.builder()
+                .id(patient.getId())
                 .chartId(patient.getChartId())
                 .name(patient.getName())
                 .sex(patient.getSex())
-                .phone(patient.getPhone())
+                .phone(convertPhone(patient.getPhone()))
                 .firstVisit(patient.getFirstVisit())
                 .lastVisit(patient.getLastVisit())
                 .birthday(patient.getBirthday())

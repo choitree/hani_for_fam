@@ -1,10 +1,8 @@
 package com.haniwon.domain;
 
 import com.haniwon.dto.patient.request.PatientRequestDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,14 +23,17 @@ public class Patient {
     private Long id;
 
     @Column(unique = true)
-    private Integer chartId;
+    private Long chartId;
 
     private String name;
     private String sex;
     private String phone;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate firstVisit;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastVisit;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     private String memo;
 
@@ -83,4 +85,18 @@ public class Patient {
         this.lastVisit = lastVisit;
     }
 
+    @Override
+    public String toString() {
+        return "Patient{" +
+                "id=" + id +
+                ", chartId=" + chartId +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", phone='" + phone + '\'' +
+                ", firstVisit=" + firstVisit +
+                ", lastVisit=" + lastVisit +
+                ", birthday=" + birthday +
+                ", memo='" + memo + '\'' +
+                '}';
+    }
 }

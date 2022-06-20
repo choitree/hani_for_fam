@@ -47,11 +47,25 @@ public class PatientController {
         return ResponseEntity.ok(new ResponseDTO("OK"));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseDTO> updatePatient(@RequestBody PatientRequestDTO patientRequestDTO, @PathVariable Long id) {
+    @GetMapping("/{patientId}/modify")
+    public ModelAndView modifyForm(@PathVariable Long patientId) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("patient/modify");
+        logger.info("환자 수정 폼");
+        mv.addObject("patientId", patientId);
+        PatientResponseDTO patient = patientService.showPatient(patientId);
+        mv.addObject("patient", patient);
+        return mv;
+    }
+
+    @PutMapping("{patientId}/modify")
+    public ModelAndView updatePatient(@ModelAttribute @RequestBody PatientRequestDTO patientRequestDTO,
+                                      @ModelAttribute PatientResponseDTO patient,
+                                      @PathVariable Long patientId) {
         logger.info("환자 수정");
-        patientService.updatePatient(patientRequestDTO, id);
-        return ResponseEntity.ok(new ResponseDTO("OK"));
+        ModelAndView mv = new ModelAndView("redirect:/patient/" + patientId);
+        patientService.updatePatient(patientRequestDTO, patientId);
+        return mv;
     }
 
     @DeleteMapping("/{id}")
