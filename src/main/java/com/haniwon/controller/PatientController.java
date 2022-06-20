@@ -40,11 +40,22 @@ public class PatientController {
         return ResponseEntity.ok(patientService.showAllPatients());
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDTO> createPatient(@RequestBody PatientRequestDTO patientRequestDTO) {
+    @PostMapping("/createPatient")
+    public ModelAndView createPatient(@ModelAttribute("patient") @Valid @RequestBody PatientRequestDTO patient) {
+        ModelAndView mv = new ModelAndView("redirect:/patient/total");
         logger.info("환자 생성");
-        patientService.createPatient(patientRequestDTO);
-        return ResponseEntity.ok(new ResponseDTO("OK"));
+        logger.info("patient : {}", patient);
+        patientService.createPatient(patient);
+        return mv;
+    }
+
+
+    @GetMapping("/create")
+    public ModelAndView createPatientForm() {
+        logger.info("환자 form 생성");
+        ModelAndView mv = new ModelAndView("patient/createPatient");
+        mv.addObject("patient", new PatientRequestDTO());
+        return mv;
     }
 
     @GetMapping("/{patientId}/modify")
