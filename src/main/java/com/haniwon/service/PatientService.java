@@ -60,6 +60,7 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
+    @Transactional
     public void updatePatient(PatientRequestDTO patientRequestDTO, Long id) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("해당 번호의 환자가 존재하지 않습니다."));
         patient.updatePatient(patientRequestDTO);
