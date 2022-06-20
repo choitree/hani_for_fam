@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>insertPatientInfo</title>
+    <style>
+        span {
+            display: inline-block;
+            width: 100px;
+            margin-top: 15px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<form action="createPatient" th:object="${patient}" method="post" th:onsubmit="myFunction()">
+    <span>차트번호</span>
+    <input type="text" th:field="${patient.chartId}" /> <br />
+    <span>이름</span>
+    <input type="text" th:field="${patient.name}" /> <br />
+    <span>성별</span>
+    <select th:field="${patient.sex}">
+        <option value="">--성별--</option>
+        <option value="여자">여자</option>
+        <option value="남자">남자</option>
+    </select> <br />
+    <span>핸드폰번호</span>
+        <input type="text" id="phone1" class="input0" minlength="3" maxLength="3" th:onchange="checkNumber(this)"/>
+        <input type="text" id="phone2" class="input0" minlength="4" maxLength="4" th:onchange="checkNumber(this)"/>
+        <input type="text" id="phone3" class="input0" minlength="4" maxLength="4" th:onchange="checkNumber(this)"/> <br />
+    <input type="hidden" id="fullPhone" th:field="${patient.phone}" />
+    <span>최초방문일</span>
+    <input type="date" th:field="${patient.firstVisit}" /> <br />
+    <span>마지막방문일</span>
+    <input type="date" th:field="${patient.lastVisit}" /> <br />
+    <span>생년월일</span>
+    <input type="date" th:field="${patient.birthday}" /> <br />
+    <span>비고</span>
+    <textarea th:field="${patient.memo}" /> <br />
+
+    <input type="submit" />
+</form>
+</body>
+</html>
+
+<script th:inline="javascript">
+    function myFunction() {
+        let phone1 = document.getElementById("phone1").value;
+        let phone2 = document.getElementById("phone2").value;
+        let phone3 = document.getElementById("phone3").value;
+        let phone = phone1 + phone2 + phone3;
+        document.getElementById("fullPhone").value = phone;
+    }
+
+    function checkNumber(str) {
+        let check = /^[0-9]+$/;
+        if(!check.test(str)) {
+            confirm('숫자만 입력 가능합니다.');
+        }
+
+    }
+</script>
