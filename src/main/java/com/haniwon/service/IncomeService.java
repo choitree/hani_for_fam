@@ -135,4 +135,11 @@ public class IncomeService {
         patientRepository.save(patient);
     }
 
+    public IncomeSummeryResponseDTO showAllIncomes() {
+        List<Income> incomes = incomeRepository.findAll();
+        List<IncomeResponseDTO> incomeResponseDTOS = incomes.stream()
+                .map(income -> showIncome(income.getId()))
+                .collect(Collectors.toList());
+        return IncomeSummeryResponseDTO.from(incomeResponseDTOS);
+    }
 }

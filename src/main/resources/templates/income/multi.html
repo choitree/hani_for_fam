@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<style>
+
+</style>
+
+<div class="container">
+<div class="grid-container">
+    <table class="table incomes">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>방문일자</th>
+            <th>금액</th>
+            <th>지불방법</th>
+            <th>결제여부</th>
+            <th>침/약</th>
+            <th>증상</th>
+            <th>비고</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="income : ${incomeSummery.incomeResponseDTOS}">
+            <input type="hidden" th:value="${income.id}">
+            <td></td>
+            <td th:text="${income.date}"></td>
+            <td th:text="${income.amount}"></td>
+            <td>
+                <span th:if="${income.isCash}">현금결제</span>
+                <span th:unless="${income.isCash}">카드결제</span>
+            </td>
+            <td>
+                <span th:if="${income.isPay}">지불완료</span>
+                <span th:unless="${income.isPay}">미납</span>
+            </td>
+            <td>
+                <span th:if="${income.isAcupuncture}">침</span>
+                <span th:unless="${income.isAcupuncture}">약</span>
+            </td>
+            <td th:text="${income.symptom}"></td>
+            <td th:text="${income.memo}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+
+<div class="summery-container">
+    <table class="table summery">
+
+        <tbody>
+        <tr>
+            <th>침 환자 건수</th>
+            <th th:text="${incomeSummery.acupunctureCase}"></th>
+        </tr>
+        <tr>
+            <th>약 환자 건수</th>
+            <th th:text="${incomeSummery.medicineCase}"></th>
+        </tr>
+        <tr>
+            <th>침 환자 결제금액</th>
+            <th th:text="${incomeSummery.acupunctureAmount}"></th>
+        </tr>
+        <tr>
+            <th>약 환자 결제금액</th>
+            <th th:text="${incomeSummery.medicineAmount}"></th>
+        </tr>
+        <tr>
+            <th>미수금</th>
+            <th th:text="${incomeSummery.debtAmount}"></th>
+        </tr>
+        <tr>
+            <th>완납금</th>
+            <th th:text="${incomeSummery.payedAmount}"></th>
+        </tr>
+        <tr>
+            <th>총 환자 수</th>
+            <th th:text="${incomeSummery.totalCase}"></th>
+        </tr>
+        <tr>
+            <th>총액</th>
+            <th th:text="${incomeSummery.totalAmount}"></th>
+        </tr>
+        </tbody>
+    </table>
+
+
+
+</div>
+
+</div>
+
+
+
+</body>
+</html>

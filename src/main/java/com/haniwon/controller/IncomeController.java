@@ -30,7 +30,16 @@ public class IncomeController {
          this.incomeService = incomeService;
     }
 
-    @GetMapping("/{incomeId}")
+    @GetMapping("/income/total")
+    public ModelAndView showAllIncome() {
+        logger.info("전체 매출 조회");
+        IncomeSummeryResponseDTO incomeSummery = incomeService.showAllIncomes();
+        ModelAndView mv = new ModelAndView("income/multi");
+        mv.addObject("incomeSummery", incomeSummery);
+        return mv;
+    }
+
+    @GetMapping("/income/{incomeId}")
     public ResponseEntity<IncomeResponseDTO> showIncome(@PathVariable Long incomeId) {
         logger.info("매출 1건 조회하기");
         return ResponseEntity.ok(incomeService.showIncome(incomeId));
