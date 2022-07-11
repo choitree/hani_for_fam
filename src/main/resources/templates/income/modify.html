@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>insertPatientInfo</title>
+    <style>
+        span {
+            display: inline-block;
+            width: 100px;
+            margin-top: 15px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action="@{/patient/{pId}/income/{incomeId}/modify(pId=${patient.id}, incomeId=${income.id})}"
+      th:object="${income}" method="post">
+    <input type="hidden" name="_method" value="put">
+    <span>방문일자</span>
+    <input type="date" th:field="${income.date}" th:value="${income.date}"/> <br/>
+    <span>이름</span>
+    <input type="text" th:field="${patient.name}" readonly/> <br/>
+    <span>차트번호</span>
+    <input type="text" th:field="${patient.chartId}" readonly/> <br/>
+    <span>금액</span>
+    <input type="text" th:field="${income.amount}" th:value="${income.amount}"/> <br/>
+    <span>지불방법</span>
+    <input type="radio" name="isCash" value="1" id="cash" th:attr="checked=${income.isCash == true ? true : false}"/>
+    <label for="cash">현금</label>
+    <input type="radio" name="isCash" value="0" id="credit" th:attr="checked=${income.isCash == false ? true : false}"/>
+    <label for="credit">카드</label>
+    <br/>
+    <span>결제여부</span>
+    <input type="radio" name="isPay" value="1" id="payed" th:attr="checked=${income.isPay == true ? true : false}"/>
+    <label for="payed">결제완료</label>
+    <input type="radio" name="isPay" value="0" id="notPay" th:attr="checked=${income.isPay == false ? true : false}"/>
+    <label for="notPay">미납</label>
+    <br/>
+    <span>침/약</span>
+    <input type="radio" name="isAcupuncture" value="1" id="acupuncture"
+           th:attr="checked=${income.isAcupuncture == true ? true : false}"/>
+    <label for="acupuncture">침</label>
+    <input type="radio" name="isAcupuncture" value="0" id="medicine"
+           th:attr="checked=${income.isAcupuncture == false ? true : false}"/>
+    <label for="medicine">약</label>
+    <br/>
+    <span>증상</span>
+    <input type="text" th:field="${income.symptom}" th:value="${income.symptom}"/> <br/>
+    <span>비고</span>
+    <textarea th:field="${income.memo}" th:value="${income.memo}"/> <br/>
+
+    <input type="submit"/>
+</form>
+</body>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var isCash = [[${income.isCash}]];
+    var isPay = [[${income.isPay}]];
+    var isAcupuncture = [[${income.isAcupuncture}]];
+
+
+    /*]]>*/
+</script>
+</html>
+

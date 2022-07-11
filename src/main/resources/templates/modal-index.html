@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Material Bootstrap Modal | https://www.htmlelements.com</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/modal/smart.bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/static/modal/styles.css" />
+
+    <script type="text/javascript" src="/static/smart.element.js"></script>
+    <script type="text/javascript" src="/static/smart.bootstrap.js"></script>
+    <script src="/static/modal/index.js"></script>
+</head>
+<body class="smart viewport">
+
+
+
+<bootstrap-modal id="sizeModeModal" class="fade" style-mode="primary">
+    <div class="modal-header">
+        <h5 class="modal-title h4" id="myExtraLargeModalLabel">Extra large modal</h5>
+        <bootstrap-button  class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </bootstrap-button>
+    </div>
+    <div class="modal-body">
+        <p>Modals have three optional sizes, available via modifier classes to be placed on a Modal
+            These sizes kick in at certain breakpoints to avoid horizontal scrollbars on narrower viewports.</p>
+        <input type="date" name="day" />
+
+
+    </div>
+</bootstrap-modal>
+<div class="group">
+
+    <bootstrap-button  style-mode="primary" data-toggle="modal" data-target="#sizeModeModal"
+                       data-size="lg">Large modal</bootstrap-button>
+</div>
+
+
+
+
+</body>
+</html>

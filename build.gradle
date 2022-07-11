@@ -30,8 +30,9 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.29'
 	annotationProcessor 'org.projectlombok:lombok'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -40,6 +41,14 @@ dependencies {
 
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+
+	//for date range picker
+	implementation group: 'org.webjars', name: 'jquery', version: '3.0.0'
+	implementation group: 'org.webjars', name: 'bootstrap', version: '4.0.0-2'
+	implementation 'org.webjars:popper.js:1.12.9-1'
+	implementation 'org.webjars:webjars-locator:0.45'
+	implementation 'org.webjars:font-awesome:5.11.2'
+
 }
 
 test {

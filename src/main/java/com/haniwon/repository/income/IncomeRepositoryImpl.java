@@ -112,4 +112,11 @@ public class IncomeRepositoryImpl implements IncomeRepositoryCustom{
 //        return result;
 //    }
 
+    //환자 1명에 해당하는 매출 전체 삭제
+    public Long deleteAllByPatient(Patient patient) {
+        return queryFactory.delete(income)
+                .where(income.patient.eq(patient))
+                .execute();
+    }
+
 }

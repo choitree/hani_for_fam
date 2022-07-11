@@ -2,15 +2,9 @@ package com.haniwon.dto.outcome.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.haniwon.domain.Outcome;
-import com.haniwon.domain.Stock;
-import com.haniwon.domain.Vendor;
-import com.haniwon.dto.stock.StockResponseDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Builder

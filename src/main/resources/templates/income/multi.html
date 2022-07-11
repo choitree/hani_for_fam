@@ -1,10 +1,268 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+    <!--    <link th:rel="stylesheet" th:href="@{../assets/daterangepicker/daterangepicker.css}"/>-->
+<!--    <link th:rel="stylesheet" th:href="@{webjars/font-awesome/5.11.2/css/all.css} "/>-->
+<!--    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
+</head>
 <body>
 
 <style>
 
+    body {
+        font-family: Arial;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .openBtn {
+        background: #f1f1f1;
+        border: none;
+        padding: 10px 15px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .openBtn:hover {
+        background: #bbb;
+    }
+
+    .overlay {
+        height: 100%;
+        width: 100%;
+        display: none;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0, 0.9);
+    }
+
+    .overlay-content {
+        position: relative;
+        top: 46%;
+        width: 80%;
+        text-align: center;
+        margin-top: 30px;
+        margin: auto;
+    }
+
+    .overlay .closebtn {
+        position: absolute;
+        top: 20px;
+        right: 45px;
+        font-size: 60px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .overlay .closebtn:hover {
+        color: #ccc;
+    }
+
+    .overlay input[type=date], .overlay input[type=week], .overlay input[type=month], .overlay input[type=text] {
+        padding: 15px;
+        font-size: 17px;
+        border: none;
+        float: left;
+        width: 80%;
+        background: white;
+    }
+    .overlay input[type=date]:hover, .overlay input[type=week]:hover, .overlay input[type=month]:hover, .overlay input[type=text]:hover  {
+        background: #f1f1f1;
+    }
+
+    .overlay button {
+        float: left;
+        width: 20%;
+        padding: 15px;
+        background: #ddd;
+        font-size: 17px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .overlay button:hover {
+        background: #bbb;
+    }
+
+    table {
+        border-collapse : collapse;
+    }
+
+    table, th, td {
+        border : 1px solid;
+    }
+
 </style>
+
+
+
+<div class="container">
+    <h2>Basic Modal Example</h2>
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-info btn-lg" onclick="openSearch()" data-toggle="modal" data-target="#myModal">검색조건 입력하기</button>
+    <br/>
+    <br/>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+
+            <div id="myOverlay" class="overlay">
+                <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>
+                <div class="overlay-content">
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form">
+                        <form th:object="${dateRange}" th:action="@{/income/day}" method="get">
+                            <input type="date" id="oneDayFrom" th:value="${dateRange.dateFrom}" th:field="*{dateFrom}">
+                            <input type="hidden" id="oneDayTo" name="oneDayTo" />
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="form">
+                        <form action="/">
+                            <input type="week" name="week">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="form">
+                        <form action="/">
+                            <input type="month" name="month">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                    <!--        <form action="/">-->
+                    <!--        <input type="text" placeholder="Search.." name="search">-->
+                    <!--        <button type="submit"><i class="fa fa-search"></i></button>-->
+                    <!--        </form>-->
+
+                    <div class="form">
+                        <form method="get" th:object="${dateRange}" th:action="@{/income/period}">
+
+                        <input type="text" name="datefilter" value="" />
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+
+<!--                    <div class="form">-->
+<!--                        <form method="get" th:object="${dateRange}" th:action="@{/income/period}">-->
+<!--                            <div class="form-group row">-->
+<!--                                <div class="col-md-4 mt-5">-->
+<!--&lt;!&ndash;                                    <label for="dateRange">Date Range</label>&ndash;&gt;-->
+<!--                                    <div class="input-group">-->
+<!--                                        <input type="text" class="form-control" id="dateRange" name="dateRange" autocomplete="off"/>-->
+<!--                                        <div class="input-group-append">-->
+<!--                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <input type="hidden" name="dateFrom" th:field="*{dateFrom}"/>-->
+<!--                                <input type="hidden" name="dateTo" th:field="*{dateTo}"/>-->
+<!--                            </div>-->
+
+<!--                            <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!--<div id="myOverlay" class="overlay">-->
+<!--    <span class="closebtn" onclick="closeSearch()" title="Close Overlay">×</span>-->
+<!--    <div class="overlay-content">-->
+<!--&lt;!&ndash;        <form action="/">&ndash;&gt;-->
+<!--&lt;!&ndash;            <input type="date" name="date">&ndash;&gt;-->
+<!--&lt;!&ndash;            <button type="submit"><i class="fa fa-search"></i></button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </form>&ndash;&gt;-->
+
+<!--        <div class="form">-->
+<!--            <form th:object="${dateRange}" th:action="@{/income/day}" method="get">-->
+<!--                <input type="date" id="oneDayFrom" th:value="${dateRange.dateFrom}" th:field="*{dateFrom}">-->
+
+<!--                <input type="hidden" id="oneDayTo" name="oneDayTo" />-->
+
+<!--                <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        <div class="form">-->
+<!--            <form action="/">-->
+<!--                <input type="week" name="week">-->
+<!--                <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--        <div class="form">-->
+<!--            <form action="/">-->
+<!--                <input type="month" name="month">-->
+<!--                <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--&lt;!&ndash;        <form action="/">&ndash;&gt;-->
+<!--&lt;!&ndash;        <input type="text" placeholder="Search.." name="search">&ndash;&gt;-->
+<!--&lt;!&ndash;        <button type="submit"><i class="fa fa-search"></i></button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </form>&ndash;&gt;-->
+
+<!--        <div class="form">-->
+<!--            <form method="get" th:object="${dateRange}" th:action="@{/income/period}">-->
+<!--                <div class="form-group row">-->
+<!--                    <div class="col-md-4 mt-5">-->
+<!--                        <label for="dateRange">Date of birth</label>-->
+<!--                        <div class="input-group">-->
+<!--                            <input type="text" class="form-control" id="dateRange" name="dateRange" autocomplete="off"/>-->
+<!--                            <div class="input-group-append">-->
+<!--                                <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <input type="hidden" name="dateFrom" th:field="*{dateFrom}"/>-->
+<!--                    <input type="hidden" name="dateTo" th:field="*{dateTo}"/>-->
+<!--                </div>-->
+
+<!--                <button type="submit"><i class="fa fa-search"></i></button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+<!--    </div>-->
+<!--</div>-->
+<!--<button class="btn btn-info btn-lg" onclick="openSearch()">검색조건 입력하기</button>-->
 
 <div class="container">
 <div class="grid-container">
@@ -13,6 +271,7 @@
         <tr>
             <th>#</th>
             <th>방문일자</th>
+            <th>방문자명</th>
             <th>금액</th>
             <th>지불방법</th>
             <th>결제여부</th>
@@ -26,7 +285,8 @@
             <input type="hidden" th:value="${income.id}">
             <td></td>
             <td th:text="${income.date}"></td>
-            <td th:text="${income.amount}"></td>
+            <td th:text="${income.name}"></td>
+            <td th:text="${#numbers.formatInteger(income.amount, 0, 'COMMA')}"></td>
             <td>
                 <span th:if="${income.isCash}">현금결제</span>
                 <span th:unless="${income.isCash}">카드결제</span>
@@ -44,57 +304,111 @@
         </tr>
         </tbody>
     </table>
-
-
-
 </div>
+
 
 <div class="summery-container">
     <table class="table summery">
 
         <tbody>
         <tr>
-            <th>침 환자 건수</th>
-            <th th:text="${incomeSummery.acupunctureCase}"></th>
+            <th>#</th>
+            <td>건수</td>
+            <td>금액</td>
         </tr>
         <tr>
-            <th>약 환자 건수</th>
-            <th th:text="${incomeSummery.medicineCase}"></th>
+            <th>침</th>
+            <td th:text="${#numbers.formatInteger(incomeSummery.acupunctureCase, 0, 'COMMA')}"></td>
+            <td th:text="${#numbers.formatInteger(incomeSummery.acupunctureAmount, 0, 'COMMA')}"></td>
         </tr>
         <tr>
-            <th>침 환자 결제금액</th>
-            <th th:text="${incomeSummery.acupunctureAmount}"></th>
-        </tr>
-        <tr>
-            <th>약 환자 결제금액</th>
-            <th th:text="${incomeSummery.medicineAmount}"></th>
+            <th>약</th>
+            <td th:text="${#numbers.formatInteger(incomeSummery.medicineCase, 0, 'COMMA')}"></td>
+            <td th:text="${#numbers.formatInteger(incomeSummery.medicineAmount, 0, 'COMMA')}"></td>
         </tr>
         <tr>
             <th>미수금</th>
-            <th th:text="${incomeSummery.debtAmount}"></th>
+            <td>.</td>
+            <td th:text="${#numbers.formatInteger(incomeSummery.debtAmount, 0, 'COMMA')}"></td>
         </tr>
         <tr>
-            <th>완납금</th>
-            <th th:text="${incomeSummery.payedAmount}"></th>
-        </tr>
-        <tr>
-            <th>총 환자 수</th>
-            <th th:text="${incomeSummery.totalCase}"></th>
-        </tr>
-        <tr>
-            <th>총액</th>
-            <th th:text="${incomeSummery.totalAmount}"></th>
+            <th>합계</th>
+            <td th:text="${#numbers.formatInteger(incomeSummery.totalCase, 0, 'COMMA')}"></td>
+            <td th:text="${#numbers.formatInteger(incomeSummery.totalAmount, 0, 'COMMA')}"></td>
         </tr>
         </tbody>
     </table>
+</div>
 
 
 
 </div>
 
-</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<!--<script th:src="@{../assets/moment/moment.min.js}"></script>-->
+<!--<script th:src="@{../assets/daterangepicker/daterangepicker.js}"></script>-->
+
+<!--<script th:src="@{/webjars/jquery/jquery.min.js}"></script>-->
+<!--<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>-->
+<!--<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+
+<!--<script src="@{/webjars/jquery/jquery.min.js}"></script>-->
+<!--<script src="@{/webjars/popper.js/umd/popper.min.js}"></script>-->
+<!--<script src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>-->
+
+<script type="text/javascript">
+    $(function() {
+
+        $('input[name="datefilter"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('YYYY-MM-DD') + ' - ' + picker.endDate.format('YYYY-MM-DD'));
+        });
+
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+    });
+</script>
 
 
+<script>
 
+
+    var $dateRange = $('#dateRange');
+    // var $dateRange = $('input[name=dateRange]');
+
+    $dateRange.daterangepicker();
+    $dateRange.on('apply.daterangepicker', function (ev, picker) {
+        $('input[name="dateFrom"]').val(picker.startDate.format('YYYY-MM-DD'));
+        $('input[name="dateTo"]').val(picker.endDate.format('YYYY-MM-DD'));
+    });
+
+    var $singleDate = $('#oneDayFrom');
+
+    $singleDate.on("apply", function () {
+        $('input[name="oneDayTo"]').val = $singleDate.val();
+    });
+
+    function openSearch() {
+        document.getElementById("myOverlay").style.display = "block";
+    }
+
+    function closeSearch() {
+        document.getElementById("myOverlay").style.display = "none";
+    }
+</script>
 </body>
 </html>

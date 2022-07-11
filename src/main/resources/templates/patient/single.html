@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<style>
+
+</style>
+
+<div class="container">
+    <div>
+        <table class="table patient">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>차트번호</th>
+                <th>이름</th>
+                <th>성별</th>
+                <th>핸드폰번호</th>
+                <th>최초방문일</th>
+                <th>마지막방문일</th>
+                <th>생년월일</th>
+                <th>비고</th>
+                <th>매출등록</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+                <td th:text="${patient.chartId}"></td>
+                <td th:text="${patient.name}"></td>
+                <td th:text="${patient.sex}"></td>
+                <td th:text="${patient.phone}"></td>
+                <td th:text="${patient.firstVisit}"></td>
+                <td th:text="${patient.lastVisit}"></td>
+                <td th:text="${patient.birthday}"></td>
+                <td th:text="${patient.memo}"></td>
+                <input type="hidden" th:value="${patient.id}">
+                <td>
+                    <a href="#" th:href="@{'/' + ${patient.id} + '/income/create'}">매출등록</a>
+                </td>
+                <td>
+                    <a href="#" th:href="@{/patient/{pid}/modify(pid=${patient.id})}">수정</a>
+                </td>
+                <td>
+                    <form action="#" th:action="@{/patient/{pid}(pid=${patient.id})}" th:method="delete">
+                        <button type="submit" onclick="return confirm('정말 삭제하겠습니까??')">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table incomes">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>방문일자</th>
+                <th>금액</th>
+                <th>지불방법</th>
+                <th>결제여부</th>
+                <th>침/약</th>
+                <th>증상</th>
+                <th>비고</th>
+                <th>수정</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="income : ${patient.incomes}">
+                <input type="hidden" th:value="${income.id}">
+                <td></td>
+                <td th:text="${income.date}"></td>
+                <td th:text="${income.amount}"></td>
+                <td>
+                    <span th:if="${income.isCash}">현금결제</span>
+                    <span th:unless="${income.isCash}">카드결제</span>
+                </td>
+                <td>
+                    <span th:if="${income.isPay}">지불완료</span>
+                    <span th:unless="${income.isPay}">미납</span>
+                </td>
+                <td>
+                    <span th:if="${income.isAcupuncture}">침</span>
+                    <span th:unless="${income.isAcupuncture}">약</span>
+                </td>
+                <td th:text="${income.symptom}"></td>
+                <td th:text="${income.memo}"></td>
+                <td><a href="#"
+                       th:href="@{/patient/{pId}/income/{incomeId}/modify(pId=${patient.id}, incomeId=${income.id})}">수정</a></p>
+                </td>
+                <td>
+                    <form action="#"
+                          th:action="@{/income/{patientId}/{incomeId}(patientId=${patient.id}, incomeId=${income.id})}"
+                          th:method="delete">
+                        <button type="submit" onclick="return confirm('정말 삭제하겠습니까??')">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div> <!-- /container -->
+
+</body>
+</html>
+
+<script>
+
+</script>

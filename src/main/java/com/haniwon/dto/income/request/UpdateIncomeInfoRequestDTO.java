@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -11,8 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class UpdateIncomeInfoRequestDTO {
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
+
     private Long amount;
     private Boolean isCash;
     private Boolean isPay;

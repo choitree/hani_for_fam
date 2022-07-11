@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>insertPatientInfo</title>
+    <style>
+        span {
+            display: inline-block;
+            width: 100px;
+            margin-top: 15px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<form action="#" th:action="@{/{pId}/income/create(pId=${patient.id})}" th:object="${income}" method="post">
+    <input type="hidden" th:value="${patient}">
+    <span>방문일자</span>
+    <input type="date" th:field="${income.date}"/> <br/>
+    <span>이름</span>
+    <input type="text" th:field="${patient.name}" readonly/> <br/>
+    <span>차트번호</span>
+    <input type="text" th:field="${patient.chartId}" readonly/> <br/>
+    <span>금액</span>
+    <input type="text" th:field="${income.amount}"/> <br/>
+    <span>지불방법</span>
+    <input type="radio" name="isCash" value="1" id="cash" th:checked="${income.isCash == 1}"/>
+    <label for="cash">현금</label>
+    <input type="radio" name="isCash" value="0" id="credit" th:checked="${income.isCash == 0}"/>
+    <label for="credit">카드</label>
+    <br/>
+    <span>결제여부</span>
+    <input type="radio" name="isPay" value="1" id="payed" th:checked="${income.isPay == 1}"/>
+    <label for="payed">결제완료</label>
+    <input type="radio" name="isPay" value="0" id="notPay" th:checked="${income.isPay == 0}"/>
+    <label for="notPay">미납</label>
+    <br/>
+    <span>침/약</span>
+    <input type="radio" name="isAcupuncture" value="1" id="acupuncture" th:checked="${income.isAcupuncture == 1}"/>
+    <label for="acupuncture">침</label>
+    <input type="radio" name="isAcupuncture" value="0" id="medicine" th:checked="${income.isAcupuncture == 0}"/>
+    <label for="medicine">약</label>
+    <br/>
+    <span>증상</span>
+    <input type="text" th:field="${income.symptom}"/> <br/>
+    <span>비고</span>
+    <textarea th:field="${income.memo}"/> <br/>
+
+    <input type="submit"/>
+</form>
+</body>
+</html>
+
+<script th:inline="javascript">
+    function myFunction() {
+        let phone1 = document.getElementById("phone1").value;
+        let phone2 = document.getElementById("phone2").value;
+        let phone3 = document.getElementById("phone3").value;
+        let phone = phone1 + phone2 + phone3;
+        document.getElementById("fullPhone").value = phone;
+    }
+
+    function checkNumber(str) {
+        let check = /^[0-9]+$/;
+        if (!check.test(str)) {
+            confirm('숫자만 입력 가능합니다.');
+        }
+
+    }
+</script>

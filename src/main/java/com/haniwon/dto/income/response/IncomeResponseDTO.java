@@ -6,6 +6,7 @@ import com.haniwon.domain.Income;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
@@ -14,7 +15,11 @@ import java.time.LocalDate;
 @Builder
 public class IncomeResponseDTO {
 
+    private final Long id;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private final LocalDate date;
+
     private final Long amount;
     private final String name;
     private final LocalDate birthday;
@@ -28,6 +33,7 @@ public class IncomeResponseDTO {
 
     public static IncomeResponseDTO from(Income income) {
         return IncomeResponseDTO.builder()
+                .id(income.getId())
                 .date(income.getDate())
                 .amount(income.getAmount())
                 .name(income.getPatient().getName())

@@ -11,13 +11,15 @@ import java.util.Optional;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long>, PatientRepositoryCustom {
 
-    //pId는 고유값이지만 id랑은 다른 값
-    public Optional<Patient> findBychartId(Integer pId);
+    //chartId는 고유값이지만 id랑은 다른 값
+    public Optional<Patient> findBychartId(Long pId);
 
     public Optional<Patient> findById(Long id);
 
     public Optional<Patient> findByNameAndBirthday(String name, LocalDate birthday);
 
     public List<Patient> findAllByName(String name);
+
+    public List<Patient> findAllByNameContains(String name);
 
 }

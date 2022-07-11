@@ -11,6 +11,7 @@ import com.haniwon.repository.patient.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,20 +37,18 @@ public class PatientService {
         return PatientResponseDTO.from(patient, incomes);
     }
 
-    public MultiPatientResponseDTO showSameNamePatients(String name) {
-        List<Patient> patients = patientRepository.findAllByName(name);
-        List<PatientResponseDTO> patientsResponseDTO = patients.stream()
+    public List<PatientResponseDTO> showSameNamePatients(String name) {
+        List<Patient> patients = patientRepository.findAllByNameContains(name);
+        return patients.stream()
                 .map(patient -> showPatient(patient.getId()))
                 .collect(Collectors.toList());
-        return MultiPatientResponseDTO.from(patientsResponseDTO);
     }
 
-    public MultiPatientResponseDTO showAllPatients() {
+    public List<PatientResponseDTO> showAllPatients() {
         List<Patient> patients = patientRepository.findAll();
-        List<PatientResponseDTO> patientsResponseDTO = patients.stream()
+        return patients.stream()
                 .map(patient -> showPatient(patient.getId()))
                 .collect(Collectors.toList());
-        return MultiPatientResponseDTO.from(patientsResponseDTO);
     }
 
     public void createPatient(PatientRequestDTO patientRequestDTO) {
@@ -67,8 +66,10 @@ public class PatientService {
         patientRepository.save(patient);
     }
 
+    @Transactional
     public void deletePatient(Long id) {
         Patient patient = patientRepository.findById(id).orElseThrow(() -> new NoSuchElementException("해당 번호의 환자가 존재하지 않습니다."));
+        incomeRepository.deleteAllByPatient(patient);
         patientRepository.delete(patient);
     }
 

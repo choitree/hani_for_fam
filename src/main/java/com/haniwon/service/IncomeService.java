@@ -34,7 +34,7 @@ public class IncomeService {
     public void addIncome(IncomeRequestDTO incomeRequestDTO, Long patientId) {
         Patient patient = patientRepository.findById(patientId).orElseThrow(() -> new NoSuchElementException("해당 환자가 존재하지 않아 등록이 불가합니다."));
         Income income = Income.createIncome(incomeRequestDTO, patient);
-        Patient visitPatient = patientRepository.findByNameAndBirthday(incomeRequestDTO.getName(), incomeRequestDTO.getBirthday()).orElseThrow(() -> new NoSuchElementException("해당 환자가 존재하지 않아 등록이 불가합니다."));
+        Patient visitPatient = patientRepository.findBychartId(incomeRequestDTO.getChartId()).orElseThrow(() -> new NoSuchElementException("해당 환자가 존재하지 않아 등록이 불가합니다."));
         if(patient != visitPatient) {
             throw new IllegalArgumentException("다른 환자의 매출 정보는 등록할 수 없습니다.");
         }

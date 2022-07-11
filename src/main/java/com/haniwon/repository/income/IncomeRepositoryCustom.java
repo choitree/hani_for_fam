@@ -31,4 +31,5 @@ public interface IncomeRepositoryCustom {
 
 //    public IncomeCaseSumResponseDTO findAllIncomeAndSummeryByPatient(Patient patient);
 
+    public Long deleteAllByPatient(Patient patient);
     }

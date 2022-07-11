@@ -1,15 +1,16 @@
 package com.haniwon.controller;
 
-import com.haniwon.dto.ResponseDTO;
 import com.haniwon.dto.patient.request.PatientRequestDTO;
-import com.haniwon.dto.patient.response.MultiPatientResponseDTO;
 import com.haniwon.dto.patient.response.PatientResponseDTO;
 import com.haniwon.service.PatientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping("/patient")
 @Controller
@@ -22,22 +23,31 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PatientResponseDTO> showPatient(@PathVariable Long id) {
+    @GetMapping("{id}")
+    public ModelAndView showPatient(@PathVariable Long id) {
         logger.info("환자 1명 조회");
-        return ResponseEntity.ok(patientService.showPatient(id));
+        PatientResponseDTO patient = patientService.showPatient(id);
+        ModelAndView mv = new ModelAndView("patient/single");
+        mv.addObject("patient", patient);
+        return mv;
     }
 
     @GetMapping
-    public ResponseEntity<MultiPatientResponseDTO> showSameNamePatients(@RequestParam String name) {
+    public ModelAndView showSameNamePatients(@RequestParam (value = "name", name = "name", required = false) String name) {
         logger.info("이름이 같은 환자 조회");
-        return ResponseEntity.ok(patientService.showSameNamePatients(name));
+        List<PatientResponseDTO> patients = patientService.showSameNamePatients(name);
+        ModelAndView mv = new ModelAndView("patient/multi");
+        mv.addObject("patients", patients);
+        return mv;
     }
 
     @GetMapping("/total")
-    public ResponseEntity<MultiPatientResponseDTO> showAllPatients() {
+    public ModelAndView showAllPatients() {
         logger.info("전체 환자 조회");
-        return ResponseEntity.ok(patientService.showAllPatients());
+        List<PatientResponseDTO> patients = patientService.showAllPatients();
+        ModelAndView mv = new ModelAndView("patient/multi");
+        mv.addObject("patients", patients);
+        return mv;
     }
 
     @PostMapping("/createPatient")
@@ -79,11 +89,13 @@ public class PatientController {
         return mv;
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDTO> deletePatient(@PathVariable Long id) {
+    @DeleteMapping("{id}")
+    public ModelAndView deletePatient(@PathVariable Long id) {
         logger.info("환자 삭제");
+        ModelAndView mv = new ModelAndView("redirect:/patient/total");
         patientService.deletePatient(id);
-        return ResponseEntity.ok(new ResponseDTO("OK"));
+        return mv;
     }
+
 
 }
